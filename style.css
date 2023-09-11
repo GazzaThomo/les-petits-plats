@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  max-width: 1440px;
+  margin: auto;
+  box-sizing: border-box;
+  background: #d9d9d9;
+}
+
+nav {
+  height: 667px;
+  background-color: lightgray;
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3)
+    ),
+    url(./assets/images/arriereplan-accueil.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.logo {
+  width: 180px;
+  color: white;
+  margin: 51px 0 0 69px;
+}
+
+.main-nav-text {
+  color: #ffd15b;
+  font-family: Anton;
+  font-size: 44px;
+  text-wrap: balance;
+  max-width: 890px;
+  margin: auto;
+  text-align: center;
+}
+
+.search-input-element {
+  max-width: 954px;
+  margin: auto;
+}
