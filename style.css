@@ -7,9 +7,10 @@
   max-width: 1440px;
   margin: auto;
   box-sizing: border-box;
-  background: #d9d9d9;
+  background: #ededed;
 }
 
+/******* NAVBAR AND SEARCH AREA ********/
 nav {
   height: 667px;
   background-color: lightgray;
@@ -42,4 +43,27 @@ nav {
 .search-input-element {
   max-width: 954px;
   margin: auto;
+  background-color: #fff;
+  border-radius: 11px;
+}
+
+#searchbar {
+  margin-bottom: 0 !important;
+  padding: 10px;
+}
+
+#loupe-rechercher {
+  background-color: #1b1b1b;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 52px;
+  width: 51px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-control.search-input-area {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
