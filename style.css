@@ -67,3 +67,24 @@ nav {
   outline: none;
   box-shadow: none;
 }
+
+.card .card-img-top {
+  max-height: 253px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 21px 21px 0 0;
+}
+
+.recipe-cards-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  row-gap: 66px;
+}
+
+.recipe-cards-section .card {
+  flex: 1 0 calc(33.3333% - 16px); /* Adjust for three cards per row and gap */
+  box-sizing: border-box;
+  border-radius: 21px;
+  max-width: 380px;
+}
