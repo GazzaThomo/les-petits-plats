@@ -114,10 +114,11 @@ nav {
   color: #1b1b1b;
   font-family: Manrope;
   font-size: 14px;
-  max-height: 76px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /* https://stackoverflow.com/questions/33058004/applying-an-ellipsis-to-multiline-text */
 }
 
 .ingredient-name {
