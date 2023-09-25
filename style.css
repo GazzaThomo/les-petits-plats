@@ -73,13 +73,18 @@ nav {
   width: 100%;
   object-fit: cover;
   border-radius: 21px 21px 0 0;
+  position: relative;
 }
 
 .recipe-cards-section {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   row-gap: 66px;
+}
+
+main {
+  margin: 0 102px;
 }
 
 .recipe-cards-section .card {
@@ -133,4 +138,57 @@ nav {
   font-family: Manrope;
   font-size: 14px;
   font-weight: 400;
+}
+
+h2 {
+  color: #1b1b1b;
+  font-family: Anton;
+  font-size: 21px;
+}
+
+.card-time {
+  position: absolute;
+  background: #ffd15b;
+  border-radius: 14px;
+  color: #1b1b1b;
+  text-align: center;
+  font-family: Manrope;
+  font-size: 12px;
+  padding: 5px 15px;
+  top: 21px;
+  right: 22px;
+}
+
+.search-dropdown-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 21px;
+  margin-bottom: 55px;
+}
+
+.search-dropdown {
+  display: flex;
+  gap: 66px;
+}
+
+/* #dropdown-ingredients,
+#dropdown-ingredients:hover,
+#dropdown-ingredients:active,
+#dropdown-appareils,
+#dropdown-appareils:hover,
+#dropdown-appareils:active,
+#dropdown-ustentiles,
+#dropdown-ustentiles:hover,
+#dropdown-ustentiles:active {
+  background-color: #fff;
+  color: #1b1b1b;
+  border-color: #fff;
+} */
+
+.drop-custom,
+.drop-custom:hover,
+.drop-custom:active {
+  background-color: #fff;
+  color: #1b1b1b;
+  border-color: #fff;
 }

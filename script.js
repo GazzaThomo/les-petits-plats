@@ -11,6 +11,10 @@ recipes.forEach((recipe) => {
   cardImage.src = `./assets/images/plats/${recipe.image}`;
   cardImage.alt = recipe.name;
 
+  const cardTime = document.createElement("p");
+  cardTime.className = "card-time";
+  cardTime.textContent = `${recipe.time}min`;
+
   const cardBody = document.createElement("div");
   cardBody.className = "card-body";
 
@@ -59,6 +63,7 @@ recipes.forEach((recipe) => {
   cardBody.appendChild(cardIngredientsTitle);
   cardBody.appendChild(cardIngredients);
   card.appendChild(cardImage);
+  card.appendChild(cardTime);
   card.appendChild(cardBody);
 
   cardsContainer.appendChild(card);

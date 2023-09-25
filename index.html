@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Les petits plats - Accueil</title>
-    <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,6 +16,7 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="main-container">
@@ -49,9 +49,64 @@
 
       <main>
         <div class="search-dropdown-section">
-          <div class="search-dropdown"></div>
+          <div class="search-dropdown">
+            <!--  START DROPDOWN ONE -->
+            <div class="dropdown drop-ingredients">
+              <button
+                class="btn btn-secondary dropdown-toggle drop-custom"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                id="dropdown-ingredients"
+              >
+                Ingrédients
+              </button>
+              <ul class="dropdown-menu">
+                <li>Something 1</li>
+              </ul>
+            </div>
+            <!--  END DROPDOWN ONE -->
+
+            <!--  START DROPDOWN TWO -->
+            <div class="dropdown drop-appareils">
+              <button
+                class="btn btn-secondary dropdown-toggle drop-custom"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                id="dropdown-appareils"
+              >
+                Appareils
+              </button>
+              <ul class="dropdown-menu">
+                <li>Something 2</li>
+              </ul>
+            </div>
+            <!--  END DROPDOWN TWO -->
+
+            <!--  START DROPDOWN THREE -->
+            <div class="dropdown drop-ustentiles">
+              <button
+                class="btn btn-secondary dropdown-toggle drop-custom"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                id="dropdown-ustentiles"
+              >
+                Ustentiles
+              </button>
+              <ul class="dropdown-menu">
+                <li>Something 3</li>
+              </ul>
+            </div>
+            <!--  END DROPDOWN THREE -->
+          </div>
+          <!-- END SEARCH-DROPDOWNS -->
+
           <h2>1500 recettes</h2>
         </div>
+        <!-- END DROPDOWN SECTION -->
+
         <div class="recipe-cards-section"></div>
       </main>
 
