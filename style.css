@@ -48,6 +48,7 @@ nav {
 }
 
 #searchbar {
+  margin-top: 30px;
   margin-bottom: 0 !important;
   padding: 10px;
 }
@@ -95,9 +96,9 @@ main {
 }
 
 .ingredients-section {
-  column-count: 2;
-  column-gap: 16px;
   max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .card-title {
