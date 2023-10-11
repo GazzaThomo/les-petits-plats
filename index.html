@@ -31,7 +31,7 @@
             <div class="input-group mb-3" id="searchbar">
               <input
                 type="text"
-                class="form-control search-input-area"
+                class="form-control search-input-area main-search-bar"
                 placeholder="Rechercher une recette, un ingrédient..."
                 aria-label="Rechercher une recette, un ingrédient..."
                 aria-describedby="loupe-rechercher"
@@ -62,7 +62,7 @@
                 Ingrédients
               </button>
               <ul class="dropdown-menu dropdown-menu-ingredients">
-                <li>Something 1</li>
+                <li><input type="text" class="dropdown-search-input" /></li>
               </ul>
             </div>
             <!--  END DROPDOWN ONE -->
@@ -79,7 +79,7 @@
                 Appareils
               </button>
               <ul class="dropdown-menu dropdown-menu-appareils">
-                <li>Something 2</li>
+                <li><input type="text" class="dropdown-search-input" /></li>
               </ul>
             </div>
             <!--  END DROPDOWN TWO -->
@@ -96,7 +96,7 @@
                 Ustentiles
               </button>
               <ul class="dropdown-menu dropdown-menu-ustensils">
-                <li>Something 3</li>
+                <li><input type="text" class="dropdown-search-input" /></li>
               </ul>
             </div>
             <!--  END DROPDOWN THREE -->
@@ -105,20 +105,25 @@
 
           <h2>1500 recettes</h2>
         </div>
+        <div class="badge-section"></div>
         <!-- END DROPDOWN SECTION -->
 
-        <div class="recipe-cards-section"></div>
+        <div class="recipe-cards-section">
+          <p class="no-correspondance-message">
+            Aucune correspondance trouvée !
+          </p>
+        </div>
       </main>
 
       <footer></footer>
     </div>
-
-    <div class="test"></div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
     <script src="script.js" type="module" defer></script>
+    <script src="./search2/mainSearch2.js" type="module" defer></script>
+    <script src="./search/dropdownSearch.js" type="module" defer></script>
   </body>
 </html>
