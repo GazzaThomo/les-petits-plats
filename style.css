@@ -10,6 +10,13 @@
   background: #ededed;
 }
 
+.no-correspondance-message {
+  text-align: center;
+  font-family: Manrope;
+  font-size: 48px;
+  display: none;
+}
+
 /******* NAVBAR AND SEARCH AREA ********/
 nav {
   height: 667px;
@@ -164,7 +171,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin-top: 21px;
-  margin-bottom: 55px;
+  margin-bottom: 21px;
 }
 
 .search-dropdown {
@@ -172,24 +179,41 @@ h2 {
   gap: 66px;
 }
 
-/* #dropdown-ingredients,
-#dropdown-ingredients:hover,
-#dropdown-ingredients:active,
-#dropdown-appareils,
-#dropdown-appareils:hover,
-#dropdown-appareils:active,
-#dropdown-ustentiles,
-#dropdown-ustentiles:hover,
-#dropdown-ustentiles:active {
-  background-color: #fff;
-  color: #1b1b1b;
-  border-color: #fff;
-} */
-
 .drop-custom,
 .drop-custom:hover,
 .drop-custom:active {
   background-color: #fff;
   color: #1b1b1b;
   border-color: #fff;
+}
+
+.dropdown-menu {
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.badge-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.badge {
+  background-color: #ffd15b;
+  color: #000;
+  font-family: Manrope;
+  font-size: 14px;
+  padding: 17px 18px;
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+p {
+  margin: 0;
+}
+
+.badge-exit {
+  cursor: pointer;
 }
