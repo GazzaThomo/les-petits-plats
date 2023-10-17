@@ -10,7 +10,7 @@ const searchbarElement = document.querySelector(".main-search-bar");
 searchbarElement.addEventListener("input", handleInputChangeMainSearchbar);
 
 function handleInputChangeMainSearchbar(e) {
-  const inputWords = getMainSearchbarWords(e);
+  const inputWords = getMainSearchbarWords(e.target);
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
   searchRecipe(allSearchWords);

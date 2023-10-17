@@ -120,7 +120,8 @@ function findElementInDropdown(nodeListInHTML, text) {
 
 // this is basically to redo the searches on the cards
 function handleBadgeChange() {
-  const inputWords = getMainSearchbarWords(e);
+  const searchbarElement = document.querySelector(".main-search-bar");
+  const inputWords = getMainSearchbarWords(searchbarElement);
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
   searchRecipe(allSearchWords);

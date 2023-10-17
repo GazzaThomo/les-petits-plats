@@ -1,28 +1,12 @@
-import { recipes } from "../recipes.js";
-import {
-  recipesCopy,
-  getIngredients,
-  getAppareils,
-  getUstentiles,
-} from "../script.js";
+import { reloadDropdownsOnMainSearch } from "./searchbar.js";
+import { recipesCopy } from "../script.js";
 
-export let inputWords = [];
-const searchbarElement = document.querySelector(".main-search-bar");
-searchbarElement.addEventListener("input", mainSearch);
-
-function mainSearch(e) {
-  let input = e.target.value.toLowerCase();
-  inputWords = input
-    .trim()
-    .split(" ")
-    .filter((word) => word.length > 0);
-
-  console.log(inputWords);
-
-  if (inputWords.some((word) => word.length >= 3)) {
-    changeIsHiddenProperty(inputWords);
+//main search function
+export function searchRecipe(arrayOfStrings) {
+  if (arrayOfStrings.some((word) => word.length >= 3)) {
+    changeIsHiddenProperty(arrayOfStrings);
     hideCards();
-    reloadDropdownsOnMainSearch(inputWords);
+    reloadDropdownsOnMainSearch(arrayOfStrings);
   } else {
     hideCards(-1);
     reloadDropdownsOnMainSearch(-1);
@@ -99,61 +83,23 @@ function hideCards(input) {
   }
 }
 
-function reloadDropdownsOnMainSearch(input) {
-  const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
-  const dropdownApplianceList = document.querySelectorAll(".list-appliance");
-  const dropdownUtensilList = document.querySelectorAll(".list-utensil");
+// helper functions for the other js files
+export function getMainSearchbarWords(inputElement) {
+  const input = inputElement.value.toLowerCase();
+  const inputWords = input
+    .trim()
+    .split(" ")
+    .filter((word) => word.length > 0);
 
-  if (input === -1) {
-    dropdownIngredientList.forEach((item) => {
-      item.style.display = "block";
-    });
-
-    dropdownApplianceList.forEach((item) => {
-      item.style.display = "block";
-    });
-
-    dropdownUtensilList.forEach((item) => {
-      item.style.display = "block";
-    });
-    return;
-  }
-
-  const newIngredientList = getIngredients();
-  const newApplianceList = getAppareils();
-  const newUtensilList = getUstentiles();
-
-  dropdownIngredientList.forEach((item) => {
-    const value = item.textContent.toLowerCase();
-
-    // inputWords.some will go over the array, taking each word, then we wheck to see if that word is included in value
-    const isMatched = newIngredientList.some((word) =>
-      value.includes(word.toLowerCase())
-    );
-    hideListItemsInDropdowns(isMatched, item);
-  });
-
-  dropdownApplianceList.forEach((item) => {
-    const value = item.textContent.toLowerCase();
-    const isMatched = newApplianceList.some((word) =>
-      value.includes(word.toLowerCase())
-    );
-    hideListItemsInDropdowns(isMatched, item);
-  });
-
-  dropdownUtensilList.forEach((item) => {
-    const value = item.textContent.toLowerCase();
-    const isMatched = newUtensilList.some((word) =>
-      value.includes(word.toLowerCase())
-    );
-    hideListItemsInDropdowns(isMatched, item);
-  });
+  return inputWords;
 }
 
-function hideListItemsInDropdowns(match, item) {
-  if (!match) {
-    item.style.display = "none";
-  } else {
-    item.style.display = "block";
+export function getAllBadgeText() {
+  const badges = document.querySelectorAll(".badge-text");
+  let badgeText = [];
+  for (let i = 0; i < badges.length; i++) {
+    badgeText.push(badges[i].textContent);
   }
+
+  return badgeText;
 }
