@@ -8,11 +8,11 @@ export let getTotalIngredients = createTotalIngredients();
 export let allWords = [];
 
 function loadPageInitial() {
+  addHiddenProperty();
   loadRecipeCards();
   loadIngredientsDropdownInitial(listOfIngredients);
   loadAppliancesDropdownInitial(listOfAppliances);
   loadUtensilsDropdownInitial(listOfUtencils);
-  addHiddenProperty();
 }
 
 function loadRecipeCards() {
@@ -87,22 +87,26 @@ function loadRecipeCards() {
   });
 }
 
-function getIngredients() {
+export function getIngredients() {
   let allIngredients = [];
   let totalIngredients = [];
+
   recipes.forEach((recipe) => {
-    let object = {};
-    let ingredients = recipe.ingredients;
-    let specificRecipeIngredients = [];
-    object.id = recipe.id;
-    ingredients.forEach((ingredient) => {
-      let someIngredient = ingredient.ingredient.trim();
-      allIngredients.push(someIngredient.toLowerCase());
-      specificRecipeIngredients.push(someIngredient.toLowerCase());
-    });
-    object.ingredients = specificRecipeIngredients;
-    totalIngredients.push(object);
+    if (!recipe.isHidden) {
+      let object = {};
+      let ingredients = recipe.ingredients;
+      let specificRecipeIngredients = [];
+      object.id = recipe.id;
+      ingredients.forEach((ingredient) => {
+        let someIngredient = ingredient.ingredient.trim();
+        allIngredients.push(someIngredient.toLowerCase());
+        specificRecipeIngredients.push(someIngredient.toLowerCase());
+      });
+      object.ingredients = specificRecipeIngredients;
+      totalIngredients.push(object);
+    }
   });
+
   allIngredients = allIngredients.sort();
   let setIngredients = [...new Set(allIngredients)];
 
@@ -113,11 +117,13 @@ function getIngredients() {
   return uniqueIngredients;
 }
 
-function getAppareils() {
+export function getAppareils() {
   let allAppareils = [];
   recipes.forEach((appareil) => {
-    let someAppliance = appareil.appliance.trim();
-    allAppareils.push(someAppliance.toLowerCase());
+    if (!appareil.isHidden) {
+      let someAppliance = appareil.appliance.trim();
+      allAppareils.push(someAppliance.toLowerCase());
+    }
   });
   allAppareils.sort();
   let setAppareils = [...new Set(allAppareils)];
@@ -128,10 +134,12 @@ function getAppareils() {
   return uniqueAppareils;
 }
 
-function getUstentiles() {
+export function getUstentiles() {
   let allUstentiles = [];
   recipes.forEach((recipe) => {
-    allUstentiles.push(...recipe.ustensils);
+    if (!recipe.isHidden) {
+      allUstentiles.push(...recipe.ustensils);
+    }
   });
 
   allUstentiles = allUstentiles.map((ustencile) =>
