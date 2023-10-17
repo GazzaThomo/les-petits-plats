@@ -5,7 +5,6 @@ export let listOfIngredients = getIngredients();
 export let listOfAppliances = getAppareils();
 export let listOfUtencils = getUstentiles();
 export let getTotalIngredients = createTotalIngredients();
-export let allWords = [];
 
 function loadPageInitial() {
   addHiddenProperty();
