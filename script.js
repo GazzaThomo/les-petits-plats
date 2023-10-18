@@ -86,7 +86,38 @@ function loadRecipeCards() {
   });
 }
 
-export function getIngredients() {
+// export function getIngredients(input) {
+//   let allIngredients = [];
+//   let totalIngredients = [];
+
+//   recipes.forEach((recipe) => {
+//     if (!recipe.isHidden) {
+//       let object = {};
+//       let ingredients = recipe.ingredients;
+//       let specificRecipeIngredients = [];
+//       object.id = recipe.id;
+//       ingredients.forEach((ingredient) => {
+//         let someIngredient = ingredient.ingredient.trim();
+//         allIngredients.push(someIngredient.toLowerCase());
+//         specificRecipeIngredients.push(someIngredient.toLowerCase());
+//       });
+//       object.ingredients = specificRecipeIngredients;
+//       totalIngredients.push(object);
+//     }
+//   });
+
+//   allIngredients = allIngredients.sort();
+//   let setIngredients = [...new Set(allIngredients)];
+
+//   //Use this to make the first char of each word uppercase, makes it look nicer
+//   let uniqueIngredients = setIngredients.map(
+//     (str) => str.charAt(0).toUpperCase() + str.slice(1)
+//   );
+
+//   return uniqueIngredients;
+// }
+
+export function getIngredients(input = []) {
   let allIngredients = [];
   let totalIngredients = [];
 
@@ -109,10 +140,19 @@ export function getIngredients() {
   allIngredients = allIngredients.sort();
   let setIngredients = [...new Set(allIngredients)];
 
-  //Use this to make the first char of each word uppercase, makes it look nicer
-  let uniqueIngredients = setIngredients.map(
+  // Transform the input to lowercase for comparison
+  let inputLowerCase = input.map((item) => item.toLowerCase());
+
+  // Filter out ingredients that appear in the input
+  let filteredIngredients = setIngredients.filter(
+    (ingredient) => !inputLowerCase.includes(ingredient)
+  );
+
+  // Use this to make the first char of each word uppercase, makes it look nicer
+  let uniqueIngredients = filteredIngredients.map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
+
   return uniqueIngredients;
 }
 
