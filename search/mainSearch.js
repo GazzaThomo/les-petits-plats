@@ -17,8 +17,11 @@ function changeIsHiddenProperty(words) {
   recipesCopy.forEach((recipe) => {
     const wordsArePresent = words.every((word) => wordInRecipe(word, recipe));
     if (!wordsArePresent) {
+      // console.log(recipe.name + " is hidden");
       recipe.isHidden = true;
     } else {
+      // console.log(recipe.name + " is NOT hidden");
+
       recipe.isHidden = false;
     }
   });

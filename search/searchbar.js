@@ -40,6 +40,7 @@ export function reloadDropdownsOnMainSearch(input) {
   const newApplianceList = getAppareils();
   const newUtensilList = getUstentiles();
 
+  console.log(newIngredientList);
   dropdownIngredientList.forEach((item) => {
     const value = item.textContent.toLowerCase();
 

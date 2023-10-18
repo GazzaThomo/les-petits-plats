@@ -45,8 +45,8 @@ function initiateClickedDropdownElements() {
 
 function dropdownElementClicked(element) {
   addBadgeElement(element.textContent);
-  removeElementFromDropdown(element);
   handleBadgeChange();
+  removeElementFromDropdown(element);
 }
 
 function addBadgeElement(word) {
