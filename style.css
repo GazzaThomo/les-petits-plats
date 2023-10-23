@@ -92,7 +92,8 @@ nav {
 }
 
 main {
-  margin: 0 102px;
+  padding: 0 102px 200px 102px;
+  box-sizing: border-box;
 }
 
 .recipe-cards-section .card {
@@ -216,4 +217,34 @@ p {
 
 .badge-exit {
   cursor: pointer;
+}
+
+.dropdown li {
+  padding: 6.5px 16px 6.5px 16px;
+  box-sizing: border-box;
+}
+
+.dropdown li:hover:not(:first-child) {
+  background-color: #ffd15b;
+}
+
+.dropdown-menu {
+  /* padding: 16px; */
+  border-radius: 11px;
+}
+
+.dropdown-menu {
+  /* scrollbar-width: none; For Firefox */
+  /* -ms-overflow-style: none; For Internet Explorer 10+ */
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  /*For WebKit Browsers*/
+  /* width: 0; */
+}
+
+.btn:first-child:active {
+  color: unset;
+  background-color: #fff;
+  border-color: transparent;
 }

@@ -1,5 +1,5 @@
 import { reloadDropdownsOnMainSearch } from "./searchbar.js";
-import { recipesCopy } from "../script.js";
+import { recipesCopy, updateRecipeCountText } from "../script.js";
 
 //main search function
 export function searchRecipe(arrayOfStrings) {
@@ -7,9 +7,11 @@ export function searchRecipe(arrayOfStrings) {
     changeIsHiddenProperty(arrayOfStrings);
     hideCards();
     reloadDropdownsOnMainSearch(arrayOfStrings);
+    updateRecipeCountText();
   } else {
     hideCards(-1);
     reloadDropdownsOnMainSearch(-1);
+    updateRecipeCountText(-1);
   }
 }
 

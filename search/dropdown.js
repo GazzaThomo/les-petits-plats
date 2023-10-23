@@ -8,6 +8,7 @@ import {
   listOfAppliances,
   listOfIngredients,
   listOfUtencils,
+  updateRecipeCountText,
 } from "../script.js";
 
 const dropdownIngredientList = document.querySelectorAll(".list-ingredient");

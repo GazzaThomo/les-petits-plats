@@ -84,6 +84,7 @@ function loadRecipeCards() {
 
     cardsContainer.appendChild(card);
   });
+  updateRecipeCountText(recipesCopy);
 }
 
 export function getIngredients(input = []) {
@@ -246,6 +247,25 @@ function addHiddenProperty() {
   recipesCopy.forEach((recipe) => {
     recipe.isHidden = false;
   });
+}
+
+export function updateRecipeCountText(input) {
+  const textElement = document.querySelector(".recipe-number");
+
+  if (input === -1) {
+    textElement.textContent = `${recipesCopy.length} recettes`;
+  } else {
+    // count the number of recipes where isHidden is false
+    const visibleRecipesCount = recipesCopy.filter(
+      (recipe) => !recipe.isHidden
+    ).length;
+
+    const newText =
+      visibleRecipesCount === 1
+        ? `1 recette`
+        : `${visibleRecipesCount} recettes`;
+    textElement.textContent = newText;
+  }
 }
 
 loadPageInitial();
