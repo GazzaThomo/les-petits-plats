@@ -86,40 +86,9 @@ function loadRecipeCards() {
   });
 }
 
-// export function getIngredients(input) {
-//   let allIngredients = [];
-//   let totalIngredients = [];
-
-//   recipes.forEach((recipe) => {
-//     if (!recipe.isHidden) {
-//       let object = {};
-//       let ingredients = recipe.ingredients;
-//       let specificRecipeIngredients = [];
-//       object.id = recipe.id;
-//       ingredients.forEach((ingredient) => {
-//         let someIngredient = ingredient.ingredient.trim();
-//         allIngredients.push(someIngredient.toLowerCase());
-//         specificRecipeIngredients.push(someIngredient.toLowerCase());
-//       });
-//       object.ingredients = specificRecipeIngredients;
-//       totalIngredients.push(object);
-//     }
-//   });
-
-//   allIngredients = allIngredients.sort();
-//   let setIngredients = [...new Set(allIngredients)];
-
-//   //Use this to make the first char of each word uppercase, makes it look nicer
-//   let uniqueIngredients = setIngredients.map(
-//     (str) => str.charAt(0).toUpperCase() + str.slice(1)
-//   );
-
-//   return uniqueIngredients;
-// }
-
 export function getIngredients(input = []) {
   let allIngredients = [];
-  let totalIngredients = [];
+  let filteredIngredients;
 
   recipes.forEach((recipe) => {
     if (!recipe.isHidden) {
@@ -133,31 +102,37 @@ export function getIngredients(input = []) {
         specificRecipeIngredients.push(someIngredient.toLowerCase());
       });
       object.ingredients = specificRecipeIngredients;
-      totalIngredients.push(object);
     }
   });
 
   allIngredients = allIngredients.sort();
+
+  //this creates a unique set of all ingredients
   let setIngredients = [...new Set(allIngredients)];
 
-  // Transform the input to lowercase for comparison
-  let inputLowerCase = input.map((item) => item.toLowerCase());
+  if (input.length !== 0) {
+    //transform the input to lowercase for comparison
+    let inputLowerCase = input.map((item) => item.toLowerCase());
 
-  // Filter out ingredients that appear in the input
-  let filteredIngredients = setIngredients.filter(
-    (ingredient) => !inputLowerCase.includes(ingredient)
-  );
+    //filter out ingredients that appear in the input. If input is empty array, this does nothing
+    filteredIngredients = setIngredients.filter(
+      (ingredient) => !inputLowerCase.includes(ingredient)
+    );
+  } else {
+    filteredIngredients = setIngredients;
+  }
 
   // Use this to make the first char of each word uppercase, makes it look nicer
-  let uniqueIngredients = filteredIngredients.map(
+  const uniqueIngredients = filteredIngredients.map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
 
   return uniqueIngredients;
 }
 
-export function getAppareils() {
+export function getAppareils(input = []) {
   let allAppareils = [];
+  let filteredAppliances;
   recipes.forEach((appareil) => {
     if (!appareil.isHidden) {
       let someAppliance = appareil.appliance.trim();
@@ -167,31 +142,52 @@ export function getAppareils() {
   allAppareils.sort();
   let setAppareils = [...new Set(allAppareils)];
 
-  let uniqueAppareils = setAppareils.map(
+  if (input.length !== 0) {
+    let inputLowerCase = input.map((item) => item.toLowerCase());
+
+    filteredAppliances = setAppareils.filter(
+      (appliance) => !inputLowerCase.includes(appliance)
+    );
+  } else {
+    filteredAppliances = setAppareils;
+  }
+
+  const uniqueAppareils = filteredAppliances.map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
   return uniqueAppareils;
 }
 
-export function getUstentiles() {
+export function getUstentiles(input = []) {
   let allUstentiles = [];
+  let filteredUtensils;
   recipes.forEach((recipe) => {
     if (!recipe.isHidden) {
       allUstentiles.push(...recipe.ustensils);
     }
   });
 
+  allUstentiles.sort();
   allUstentiles = allUstentiles.map((ustencile) =>
     ustencile.trim().toLowerCase()
   );
 
-  let uniqueUstensilesSet = new Set(allUstentiles);
+  let uniqueUstensilesSet = [...new Set(allUstentiles)];
+  console.log([...uniqueUstensilesSet]);
 
-  let uniqueUstensiles = [...uniqueUstensilesSet].map(
+  if (input.length !== 0) {
+    let inputLowerCase = input.map((item) => item.toLowerCase());
+
+    filteredUtensils = uniqueUstensilesSet.filter(
+      (utensil) => !inputLowerCase.includes(utensil)
+    );
+  } else {
+    filteredUtensils = uniqueUstensilesSet;
+  }
+  const uniqueUstensiles = [...filteredUtensils].map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
 
-  uniqueUstensiles.sort();
   return uniqueUstensiles;
 }
 

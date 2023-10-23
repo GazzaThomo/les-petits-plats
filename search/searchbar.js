@@ -36,11 +36,10 @@ export function reloadDropdownsOnMainSearch(input) {
     return;
   }
 
-  const newIngredientList = getIngredients();
-  const newApplianceList = getAppareils();
-  const newUtensilList = getUstentiles();
+  const newIngredientList = getIngredients(input);
+  const newApplianceList = getAppareils(input);
+  const newUtensilList = getUstentiles(input);
 
-  console.log(newIngredientList);
   dropdownIngredientList.forEach((item) => {
     const value = item.textContent.toLowerCase();
 
