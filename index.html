@@ -22,6 +22,7 @@
     <div class="main-container">
       <nav>
         <img class="logo" src="./assets/images/logo.svg" />
+        <img class="logo-badge" src="./assets/images/logoBadge.svg" />
         <div class="nav-content">
           <h1 class="main-nav-text">
             CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET
@@ -51,7 +52,7 @@
         <div class="search-dropdown-section">
           <div class="search-dropdown">
             <!--  START DROPDOWN ONE -->
-            <div class="dropdown drop-ingredients">
+            <div class="dropdown" data-type="drop-ingredients">
               <button
                 class="btn btn-secondary dropdown-toggle drop-custom"
                 type="button"
@@ -62,13 +63,18 @@
                 Ingrédients
               </button>
               <ul class="dropdown-menu dropdown-menu-ingredients">
-                <li><input type="text" class="dropdown-search-input" /></li>
+                <li>
+                  <input
+                    type="text"
+                    class="dropdown-search-input dropdown-search-input__ingredients"
+                  />
+                </li>
               </ul>
             </div>
             <!--  END DROPDOWN ONE -->
 
             <!--  START DROPDOWN TWO -->
-            <div class="dropdown drop-appareils">
+            <div class="dropdown" data-type="drop-appareils">
               <button
                 class="btn btn-secondary dropdown-toggle drop-custom"
                 type="button"
@@ -79,13 +85,18 @@
                 Appareils
               </button>
               <ul class="dropdown-menu dropdown-menu-appareils">
-                <li><input type="text" class="dropdown-search-input" /></li>
+                <li>
+                  <input
+                    type="text"
+                    class="dropdown-search-input dropdown-search-input__appareils"
+                  />
+                </li>
               </ul>
             </div>
             <!--  END DROPDOWN TWO -->
 
             <!--  START DROPDOWN THREE -->
-            <div class="dropdown drop-ustentiles">
+            <div class="dropdown" data-type="drop-ustentiles">
               <button
                 class="btn btn-secondary dropdown-toggle drop-custom"
                 type="button"
@@ -96,7 +107,12 @@
                 Ustentiles
               </button>
               <ul class="dropdown-menu dropdown-menu-ustensils">
-                <li><input type="text" class="dropdown-search-input" /></li>
+                <li>
+                  <input
+                    type="text"
+                    class="dropdown-search-input dropdown-search-input__utensils"
+                  />
+                </li>
               </ul>
             </div>
             <!--  END DROPDOWN THREE -->

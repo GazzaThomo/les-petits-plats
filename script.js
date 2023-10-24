@@ -1,10 +1,10 @@
 import { recipes } from "./recipes.js";
 
+export let globalIngredients, globalAppliances, globalUtensils;
 export let recipesCopy = [...recipes];
 export let listOfIngredients = getIngredients();
 export let listOfAppliances = getAppareils();
 export let listOfUtencils = getUstentiles();
-export let getTotalIngredients = createTotalIngredients();
 
 function loadPageInitial() {
   addHiddenProperty();
@@ -65,7 +65,9 @@ function loadRecipeCards() {
       ingredientSubgroup.appendChild(ingredientName);
 
       const ingredientQuantity = document.createElement("p");
-      ingredientQuantity.textContent = `${ingredient.quantity} ${ingredient.unit}`;
+      ingredientQuantity.textContent = `${ingredient.quantity ?? ""} ${
+        ingredient.unit ?? ""
+      }`;
       ingredientQuantity.className = "ingredient-quantity";
 
       ingredientSubgroup.appendChild(ingredientQuantity);
@@ -128,6 +130,7 @@ export function getIngredients(input = []) {
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
 
+  globalIngredients = uniqueIngredients;
   return uniqueIngredients;
 }
 
@@ -156,6 +159,8 @@ export function getAppareils(input = []) {
   const uniqueAppareils = filteredAppliances.map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
+  globalAppliances = uniqueAppareils;
+
   return uniqueAppareils;
 }
 
@@ -174,7 +179,6 @@ export function getUstentiles(input = []) {
   );
 
   let uniqueUstensilesSet = [...new Set(allUstentiles)];
-  console.log([...uniqueUstensilesSet]);
 
   if (input.length !== 0) {
     let inputLowerCase = input.map((item) => item.toLowerCase());
@@ -188,6 +192,7 @@ export function getUstentiles(input = []) {
   const uniqueUstensiles = [...filteredUtensils].map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
+  globalUtensils = uniqueUstensiles;
 
   return uniqueUstensiles;
 }
@@ -197,7 +202,7 @@ function loadIngredientsDropdownInitial(listOfIngredients) {
 
   listOfIngredients.forEach((ingredient) => {
     const listItem = document.createElement("li");
-    listItem.className = "list-ingredient";
+    listItem.className = "list-ingredient dropdown-item";
     listItem.textContent = ingredient;
     dropdown.appendChild(listItem);
   });
@@ -208,7 +213,7 @@ function loadAppliancesDropdownInitial(listOfAppliances) {
 
   listOfAppliances.forEach((appliance) => {
     const listItem = document.createElement("li");
-    listItem.className = "list-appliance";
+    listItem.className = "list-appliance dropdown-item";
     listItem.textContent = appliance;
     dropdown.appendChild(listItem);
   });
@@ -219,28 +224,10 @@ function loadUtensilsDropdownInitial(listOfUtencils) {
 
   listOfUtencils.forEach((utensil) => {
     const listItem = document.createElement("li");
-    listItem.className = "list-utensil";
+    listItem.className = "list-utensil dropdown-item";
     listItem.textContent = utensil;
     dropdown.appendChild(listItem);
   });
-}
-
-function createTotalIngredients() {
-  let totalIngredients = [];
-  recipes.forEach((recipe) => {
-    let object = {};
-    let ingredients = recipe.ingredients;
-    let specificRecipeIngredients = [];
-    object.recipeId = recipe.id;
-    ingredients.forEach((ingredient) => {
-      let someIngredient = ingredient.ingredient.trim();
-      specificRecipeIngredients.push(someIngredient.toLowerCase());
-    });
-    object.ingredients = specificRecipeIngredients;
-    totalIngredients.push(object);
-  });
-
-  return totalIngredients;
 }
 
 function addHiddenProperty() {

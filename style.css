@@ -37,6 +37,12 @@ nav {
   margin: 51px 0 0 69px;
 }
 
+.logo-badge {
+  width: 22px;
+  height: 22px;
+  vertical-align: bottom;
+}
+
 .main-nav-text {
   color: #ffd15b;
   font-family: Anton;
@@ -45,6 +51,7 @@ nav {
   max-width: 890px;
   margin: auto;
   text-align: center;
+  margin-top: 168px;
 }
 
 .search-input-element {
@@ -68,6 +75,11 @@ nav {
   width: 51px;
   display: flex;
   justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+#searchbar:focus-within #loupe-rechercher {
+  background-color: #ffd15b;
 }
 
 .form-control.search-input-area {
@@ -89,6 +101,13 @@ nav {
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 66px;
+  transition: opacity 250ms ease-in-out;
+  opacity: 1;
+}
+
+/* Class to hide the section */
+.recipe-cards-section.hide {
+  opacity: 0;
 }
 
 main {
@@ -107,12 +126,15 @@ main {
   max-width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 15px;
 }
 
 .card-title {
   color: #000;
   font-family: Anton;
   font-size: 18px;
+  margin-top: 32px;
+  margin-bottom: 29px;
 }
 
 .card-subsection-title {
@@ -128,6 +150,9 @@ main {
   color: #1b1b1b;
   font-family: Manrope;
   font-size: 14px;
+  min-height: 84px;
+  margin-top: 15px;
+  margin-bottom: 32px;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -147,6 +172,10 @@ main {
   font-family: Manrope;
   font-size: 14px;
   font-weight: 400;
+}
+
+.ingredient-subgroup {
+  margin-bottom: 21px;
 }
 
 h2 {
@@ -171,6 +200,7 @@ h2 {
 .search-dropdown-section {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 21px;
   margin-bottom: 21px;
 }
@@ -178,6 +208,10 @@ h2 {
 .search-dropdown {
   display: flex;
   gap: 66px;
+}
+
+.dropdown-search-input {
+  width: 100%;
 }
 
 .drop-custom,

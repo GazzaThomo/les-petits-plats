@@ -56,36 +56,41 @@ function wordInRecipe(word, recipe) {
 }
 
 function hideCards(input) {
+  const recipeCardsSection = document.querySelector(".recipe-cards-section");
   const cards = document.querySelectorAll(".card");
   const noCorrespondanceElement = document.querySelector(
     ".no-correspondance-message"
   );
 
-  if (input === -1) {
-    for (let i = 0; i < cards.length; i++) {
-      cards[i].style.display = "block";
-    }
-  } else {
-    for (let i = 0; i < cards.length; i++) {
-      const dataId = parseInt(cards[i].getAttribute("data-id"), 10);
+  recipeCardsSection.classList.add("hide");
+  setTimeout(() => {
+    if (input === -1) {
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].style.display = "block";
+      }
+    } else {
+      for (let i = 0; i < cards.length; i++) {
+        const dataId = parseInt(cards[i].getAttribute("data-id"), 10);
 
-      // find the corresponding recipe in recipesCopy
-      const correspondingRecipe = recipesCopy.find(
-        (recipe) => recipe.id === dataId
-      );
+        // find the corresponding recipe in recipesCopy
+        const correspondingRecipe = recipesCopy.find(
+          (recipe) => recipe.id === dataId
+        );
 
-      // Check if the recipe was found and then check the isHidden property
-      if (correspondingRecipe) {
-        if (correspondingRecipe.isHidden) {
-          cards[i].style.display = "none";
+        // Check if the recipe was found and then check the isHidden property
+        if (correspondingRecipe) {
+          if (correspondingRecipe.isHidden) {
+            cards[i].style.display = "none";
+          } else {
+            cards[i].style.display = "block";
+          }
         } else {
-          cards[i].style.display = "block";
+          noCorrespondanceElement.style.display = "block";
         }
-      } else {
-        noCorrespondanceElement.style.display = "block";
       }
     }
-  }
+    recipeCardsSection.classList.remove("hide");
+  }, 500);
 }
 
 // helper functions for the other js files

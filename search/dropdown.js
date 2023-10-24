@@ -8,13 +8,16 @@ import {
   listOfAppliances,
   listOfIngredients,
   listOfUtencils,
-  updateRecipeCountText,
+  globalIngredients,
+  globalAppliances,
+  globalUtensils,
 } from "../script.js";
 
 const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
 const dropdownApplianceList = document.querySelectorAll(".list-appliance");
 const dropdownUtensilsList = document.querySelectorAll(".list-utensil");
-const dropdownSearchElements = document.querySelectorAll(
+
+const dropdownInputBoxElements = document.querySelectorAll(
   ".dropdown-search-input"
 );
 
@@ -37,9 +40,9 @@ function initiateClickedDropdownElements() {
     });
   }
 
-  for (let i = 0; i < dropdownSearchElements.length; i++) {
-    dropdownSearchElements[i].addEventListener("input", function () {
-      searchDropdowns(this);
+  for (let i = 0; i < dropdownInputBoxElements.length; i++) {
+    dropdownInputBoxElements[i].addEventListener("input", function () {
+      filterDropdownItems(this, i);
     });
   }
 }
@@ -48,6 +51,7 @@ function dropdownElementClicked(element) {
   addBadgeElement(element.textContent);
   handleBadgeChange();
   removeElementFromDropdown(element);
+  clearDropdownInputField(element);
 }
 
 function addBadgeElement(word) {
@@ -78,6 +82,13 @@ function addBadgeElement(word) {
 
 function removeElementFromDropdown(element) {
   element.style.display = "none";
+}
+
+function clearDropdownInputField(element) {
+  let closestSearchElement = element
+    .closest(".dropdown")
+    .querySelector(".dropdown-search-input");
+  closestSearchElement.value = "";
 }
 
 initiateClickedDropdownElements();
@@ -126,4 +137,53 @@ function handleBadgeChange() {
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
   searchRecipe(allSearchWords);
+}
+
+//dropdown search
+
+function filterDropdownItems(inputElement, i) {
+  let inputText = inputElement.value.toLowerCase();
+
+  //find type of list (ingredient, appliance or utensil)
+  let dropdownType = inputElement
+    .closest(".dropdown")
+    .getAttribute("data-type");
+
+  //set filtered list to be the one corresponding to the dropdown
+  let currentFilteredList;
+  switch (dropdownType) {
+    case "drop-ingredients":
+      currentFilteredList = globalIngredients;
+      break;
+    case "drop-appareils":
+      currentFilteredList = globalAppliances;
+      break;
+    case "drop-ustensiles":
+      currentFilteredList = globalUtensils;
+      break;
+    default:
+      currentFilteredList = [];
+  }
+
+  //find all dropdown items within the same dropdown as the input element
+  let dropdownItems = inputElement
+    .closest(".dropdown")
+    .querySelectorAll(".dropdown-item");
+
+  dropdownItems.forEach((item) => {
+    //if a word is in the inputbox, check that each item(from dropdown list) contains the word, plus that the item is in the filtered list(global list)
+    if (
+      inputText &&
+      item.textContent.toLowerCase().includes(inputText) &&
+      currentFilteredList.includes(item.textContent)
+    ) {
+      item.style.display = "";
+    }
+    //this is for no word. Just check that the item is in the filtered list
+    else if (!inputText && currentFilteredList.includes(item.textContent)) {
+      item.style.display = "";
+    } else {
+      item.style.display = "none";
+    }
+  });
 }
