@@ -92,6 +92,7 @@ function loadRecipeCards() {
 export function getIngredients(input = []) {
   let allIngredients = [];
   let filteredIngredients;
+  if (input === -1) input = [];
 
   recipes.forEach((recipe) => {
     if (!recipe.isHidden) {
@@ -113,7 +114,7 @@ export function getIngredients(input = []) {
   //this creates a unique set of all ingredients
   let setIngredients = [...new Set(allIngredients)];
 
-  if (input.length !== 0) {
+  if (input.length > 0) {
     //transform the input to lowercase for comparison
     let inputLowerCase = input.map((item) => item.toLowerCase());
 
@@ -146,7 +147,7 @@ export function getAppareils(input = []) {
   allAppareils.sort();
   let setAppareils = [...new Set(allAppareils)];
 
-  if (input.length !== 0) {
+  if (input.length > 0) {
     let inputLowerCase = input.map((item) => item.toLowerCase());
 
     filteredAppliances = setAppareils.filter(
@@ -180,7 +181,7 @@ export function getUstentiles(input = []) {
 
   let uniqueUstensilesSet = [...new Set(allUstentiles)];
 
-  if (input.length !== 0) {
+  if (input.length > 0) {
     let inputLowerCase = input.map((item) => item.toLowerCase());
 
     filteredUtensils = uniqueUstensilesSet.filter(

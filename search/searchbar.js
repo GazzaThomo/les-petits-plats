@@ -21,24 +21,24 @@ export function reloadDropdownsOnMainSearch(input) {
   const dropdownApplianceList = document.querySelectorAll(".list-appliance");
   const dropdownUtensilList = document.querySelectorAll(".list-utensil");
 
-  if (input === -1) {
-    dropdownIngredientList.forEach((item) => {
-      item.style.display = "block";
-    });
-
-    dropdownApplianceList.forEach((item) => {
-      item.style.display = "block";
-    });
-
-    dropdownUtensilList.forEach((item) => {
-      item.style.display = "block";
-    });
-    return;
-  }
-
   const newIngredientList = getIngredients(input);
   const newApplianceList = getAppareils(input);
   const newUtensilList = getUstentiles(input);
+
+  if (input === -1) {
+    dropdownIngredientList.forEach((item) => {
+      item.style.display = "";
+    });
+
+    dropdownApplianceList.forEach((item) => {
+      item.style.display = "";
+    });
+
+    dropdownUtensilList.forEach((item) => {
+      item.style.display = "";
+    });
+    return;
+  }
 
   dropdownIngredientList.forEach((item) => {
     const value = item.textContent.toLowerCase();

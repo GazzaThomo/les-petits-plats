@@ -11,6 +11,9 @@ import {
   globalIngredients,
   globalAppliances,
   globalUtensils,
+  getIngredients,
+  getAppareils,
+  getUstentiles,
 } from "../script.js";
 
 const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
@@ -42,7 +45,7 @@ function initiateClickedDropdownElements() {
 
   for (let i = 0; i < dropdownInputBoxElements.length; i++) {
     dropdownInputBoxElements[i].addEventListener("input", function () {
-      filterDropdownItems(this, i);
+      filterDropdownItems(this);
     });
   }
 }
@@ -141,8 +144,10 @@ function handleBadgeChange() {
 
 //dropdown search
 
-function filterDropdownItems(inputElement, i) {
-  let inputText = inputElement.value.toLowerCase();
+export function filterDropdownItems(inputElement) {
+  let inputText;
+  let currentFilteredList;
+  inputText = inputElement.value.toLowerCase();
 
   //find type of list (ingredient, appliance or utensil)
   let dropdownType = inputElement
@@ -150,7 +155,6 @@ function filterDropdownItems(inputElement, i) {
     .getAttribute("data-type");
 
   //set filtered list to be the one corresponding to the dropdown
-  let currentFilteredList;
   switch (dropdownType) {
     case "drop-ingredients":
       currentFilteredList = globalIngredients;

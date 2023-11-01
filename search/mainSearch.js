@@ -9,6 +9,7 @@ export function searchRecipe(arrayOfStrings) {
     reloadDropdownsOnMainSearch(arrayOfStrings);
     updateRecipeCountText();
   } else {
+    changeIsHiddenProperty([]);
     hideCards(-1);
     reloadDropdownsOnMainSearch(-1);
     updateRecipeCountText(-1);
@@ -16,17 +17,23 @@ export function searchRecipe(arrayOfStrings) {
 }
 
 function changeIsHiddenProperty(words) {
-  recipesCopy.forEach((recipe) => {
-    const wordsArePresent = words.every((word) => wordInRecipe(word, recipe));
-    if (!wordsArePresent) {
-      // console.log(recipe.name + " is hidden");
-      recipe.isHidden = true;
-    } else {
-      // console.log(recipe.name + " is NOT hidden");
+  if (words.length !== 0) {
+    recipesCopy.forEach((recipe) => {
+      const wordsArePresent = words.every((word) => wordInRecipe(word, recipe));
+      if (!wordsArePresent) {
+        // console.log(recipe.name + " is hidden");
+        recipe.isHidden = true;
+      } else {
+        // console.log(recipe.name + " is NOT hidden");
 
+        recipe.isHidden = false;
+      }
+    });
+  } else {
+    recipesCopy.forEach((recipe) => {
       recipe.isHidden = false;
-    }
-  });
+    });
+  }
 }
 
 function wordInRecipe(word, recipe) {
@@ -66,8 +73,11 @@ function hideCards(input) {
   setTimeout(() => {
     if (input === -1) {
       for (let i = 0; i < cards.length; i++) {
-        cards[i].style.display = "block";
+        cards[i].style.display = "";
       }
+      // recipesCopy.forEach((recipe) => {
+      //   recipe.isHidden = false;
+      // });
     } else {
       for (let i = 0; i < cards.length; i++) {
         const dataId = parseInt(cards[i].getAttribute("data-id"), 10);
