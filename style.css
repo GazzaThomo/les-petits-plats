@@ -282,3 +282,25 @@ p {
   background-color: #fff;
   border-color: transparent;
 }
+
+/* MEDIA QUERIES */
+
+@media all and (max-width: 1024px) {
+  main {
+    padding: 0 75px 200px 75px;
+  }
+  .recipe-cards-section .card {
+    flex: 1 0 calc(50% - 16px); /* Adjust for three cards per row and gap */
+    box-sizing: border-box;
+    border-radius: 21px;
+    max-width: 380px;
+  }
+
+  .search-dropdown {
+    gap: 25px;
+  }
+
+  .search-input-element {
+    max-width: 650px;
+  }
+}
