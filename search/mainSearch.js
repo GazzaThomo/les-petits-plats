@@ -18,21 +18,23 @@ export function searchRecipe(arrayOfStrings) {
 
 function changeIsHiddenProperty(words) {
   if (words.length !== 0) {
-    recipesCopy.forEach((recipe) => {
+    for (let i = 0; i < recipesCopy.length; i++) {
+      const recipe = recipesCopy[i];
       const wordsArePresent = words.every((word) => wordInRecipe(word, recipe));
+      
       if (!wordsArePresent) {
-        // console.log(recipe.name + " is hidden");
-        recipe.isHidden = true;
+          // console.log(recipe.name + " is hidden");
+          recipe.isHidden = true;
       } else {
-        // console.log(recipe.name + " is NOT hidden");
-
-        recipe.isHidden = false;
+          // console.log(recipe.name + " is NOT hidden");
+          recipe.isHidden = false;
       }
-    });
+  }
+  
   } else {
-    recipesCopy.forEach((recipe) => {
-      recipe.isHidden = false;
-    });
+    for (let i = 0 ; i< recipesCopy.length;i++){
+      recipesCopy[i].isHidden = false;
+    }
   }
 }
 
@@ -72,11 +74,12 @@ function hideCards(input) {
   recipeCardsSection.classList.add("hide");
   setTimeout(() => {
     if (input === -1) {
-      cards.forEach((card) => {
-        card.style.display = "";
-      });
+      for (let i = 0 ; i< cards.length ; i++){
+        cards[i].style.display = "";
+      }
     } else {
-      cards.forEach((card) => {
+      for (let i = 0; i<cards.length;i++){
+        let card = cards[i]
         const dataId = parseInt(card.getAttribute("data-id"), 10);
 
         // find the corresponding recipe in recipesCopy
@@ -94,7 +97,7 @@ function hideCards(input) {
         } else {
           noCorrespondanceElement.style.display = "block";
         }
-      });
+      }
     }
     recipeCardsSection.classList.remove("hide");
   }, 500);
@@ -114,9 +117,9 @@ export function getMainSearchbarWords(inputElement) {
 export function getAllBadgeText() {
   const badges = document.querySelectorAll(".badge-text");
   let badgeText = [];
-  badges.forEach((badge) => {
-    badgeText.push(badge.textContent);
-  });
+  for (let i=0;i<badges.length;i++){
+badgeText.push(badges[i].textContent)
+  }
 
   return badgeText;
 }

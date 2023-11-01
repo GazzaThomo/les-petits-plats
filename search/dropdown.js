@@ -139,8 +139,9 @@ export function filterDropdownItems(inputElement) {
     .closest(".dropdown")
     .querySelectorAll(".dropdown-item");
 
-  dropdownItems.forEach((item) => {
-    //if a word is in the inputbox, check that each item(from dropdown list) contains the word, plus that the item is in the filtered list(global list)
+  for (let i = 0; i < dropdownItems.length; i++) {
+    let item = dropdownItems[i];
+    //if a word is in the input box, check that each item (from dropdown list) contains the word, plus that the item is in the filtered list (global list)
     if (
       inputText &&
       item.textContent.toLowerCase().includes(inputText) &&
@@ -148,11 +149,11 @@ export function filterDropdownItems(inputElement) {
     ) {
       item.style.display = "";
     }
-    //this is for no word. Just check that the item is in the filtered list
+    // this is for no word. Just check that the item is in the filtered list
     else if (!inputText && currentFilteredList.includes(item.textContent)) {
       item.style.display = "";
     } else {
       item.style.display = "none";
     }
-  });
+  }
 }

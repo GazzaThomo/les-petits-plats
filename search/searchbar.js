@@ -26,45 +26,46 @@ export function reloadDropdownsOnMainSearch(input) {
   const newUtensilList = getUstentiles(input);
 
   if (input === -1) {
-    dropdownIngredientList.forEach((item) => {
-      item.style.display = "";
-    });
+    for (let i = 0; i < dropdownIngredientList.length; i++) {
+      dropdownIngredientList[i].style.display = "";
+    }
 
-    dropdownApplianceList.forEach((item) => {
-      item.style.display = "";
-    });
+    for (let i = 0; i < dropdownApplianceList.length; i++) {
+      dropdownApplianceList[i].style.display = "";
+    }
 
-    dropdownUtensilList.forEach((item) => {
-      item.style.display = "";
-    });
+    for (let i = 0; i < dropdownUtensilList.length; i++) {
+      dropdownUtensilList[i].style.display = "";
+    }
     return;
   }
 
-  dropdownIngredientList.forEach((item) => {
+  for (let i = 0; i < dropdownIngredientList.length; i++) {
+    const item = dropdownIngredientList[i];
     const value = item.textContent.toLowerCase();
-
-    // inputWords.some will go over the array, taking each word, then we wheck to see if that word is included in value
     const isMatched = newIngredientList.some((word) =>
       value.includes(word.toLowerCase())
     );
     hideListItemsInDropdowns(isMatched, item);
-  });
+  }
 
-  dropdownApplianceList.forEach((item) => {
+  for (let i = 0; i < dropdownApplianceList.length; i++) {
+    const item = dropdownApplianceList[i];
     const value = item.textContent.toLowerCase();
     const isMatched = newApplianceList.some((word) =>
       value.includes(word.toLowerCase())
     );
     hideListItemsInDropdowns(isMatched, item);
-  });
+  }
 
-  dropdownUtensilList.forEach((item) => {
+  for (let i = 0; i < dropdownUtensilList.length; i++) {
+    const item = dropdownUtensilList[i];
     const value = item.textContent.toLowerCase();
     const isMatched = newUtensilList.some((word) =>
       value.includes(word.toLowerCase())
     );
     hideListItemsInDropdowns(isMatched, item);
-  });
+  }
 }
 
 function hideListItemsInDropdowns(match, item) {
