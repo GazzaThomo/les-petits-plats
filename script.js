@@ -1,18 +1,17 @@
 import { recipes } from "./recipes.js";
 
+export let globalIngredients, globalAppliances, globalUtensils;
 export let recipesCopy = [...recipes];
 export let listOfIngredients = getIngredients();
 export let listOfAppliances = getAppareils();
 export let listOfUtencils = getUstentiles();
-export let getTotalIngredients = createTotalIngredients();
-export let allWords = [];
 
 function loadPageInitial() {
+  addHiddenProperty();
   loadRecipeCards();
   loadIngredientsDropdownInitial(listOfIngredients);
   loadAppliancesDropdownInitial(listOfAppliances);
   loadUtensilsDropdownInitial(listOfUtencils);
-  addHiddenProperty();
 }
 
 function loadRecipeCards() {
@@ -66,7 +65,9 @@ function loadRecipeCards() {
       ingredientSubgroup.appendChild(ingredientName);
 
       const ingredientQuantity = document.createElement("p");
-      ingredientQuantity.textContent = `${ingredient.quantity} ${ingredient.unit}`;
+      ingredientQuantity.textContent = `${ingredient.quantity ?? ""} ${
+        ingredient.unit ?? ""
+      }`;
       ingredientQuantity.className = "ingredient-quantity";
 
       ingredientSubgroup.appendChild(ingredientQuantity);
@@ -85,66 +86,115 @@ function loadRecipeCards() {
 
     cardsContainer.appendChild(card);
   });
+  updateRecipeCountText(recipesCopy);
 }
 
-function getIngredients() {
+export function getIngredients(input = []) {
   let allIngredients = [];
-  let totalIngredients = [];
+  let filteredIngredients;
+  if (input === -1) input = [];
+
   recipes.forEach((recipe) => {
-    let object = {};
-    let ingredients = recipe.ingredients;
-    let specificRecipeIngredients = [];
-    object.id = recipe.id;
-    ingredients.forEach((ingredient) => {
-      let someIngredient = ingredient.ingredient.trim();
-      allIngredients.push(someIngredient.toLowerCase());
-      specificRecipeIngredients.push(someIngredient.toLowerCase());
-    });
-    object.ingredients = specificRecipeIngredients;
-    totalIngredients.push(object);
+    if (!recipe.isHidden) {
+      let object = {};
+      let ingredients = recipe.ingredients;
+      let specificRecipeIngredients = [];
+      object.id = recipe.id;
+      ingredients.forEach((ingredient) => {
+        let someIngredient = ingredient.ingredient.trim();
+        allIngredients.push(someIngredient.toLowerCase());
+        specificRecipeIngredients.push(someIngredient.toLowerCase());
+      });
+      object.ingredients = specificRecipeIngredients;
+    }
   });
+
   allIngredients = allIngredients.sort();
+
+  //this creates a unique set of all ingredients
   let setIngredients = [...new Set(allIngredients)];
 
-  //Use this to make the first char of each word uppercase, makes it look nicer
-  let uniqueIngredients = setIngredients.map(
+  if (input.length > 0) {
+    //transform the input to lowercase for comparison
+    let inputLowerCase = input.map((item) => item.toLowerCase());
+
+    //filter out ingredients that appear in the input. If input is empty array, this does nothing
+    filteredIngredients = setIngredients.filter(
+      (ingredient) => !inputLowerCase.includes(ingredient)
+    );
+  } else {
+    filteredIngredients = setIngredients;
+  }
+
+  // Use this to make the first char of each word uppercase, makes it look nicer
+  const uniqueIngredients = filteredIngredients.map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
+
+  globalIngredients = uniqueIngredients;
   return uniqueIngredients;
 }
 
-function getAppareils() {
+export function getAppareils(input = []) {
   let allAppareils = [];
+  let filteredAppliances;
   recipes.forEach((appareil) => {
-    let someAppliance = appareil.appliance.trim();
-    allAppareils.push(someAppliance.toLowerCase());
+    if (!appareil.isHidden) {
+      let someAppliance = appareil.appliance.trim();
+      allAppareils.push(someAppliance.toLowerCase());
+    }
   });
   allAppareils.sort();
   let setAppareils = [...new Set(allAppareils)];
 
-  let uniqueAppareils = setAppareils.map(
+  if (input.length > 0) {
+    let inputLowerCase = input.map((item) => item.toLowerCase());
+
+    filteredAppliances = setAppareils.filter(
+      (appliance) => !inputLowerCase.includes(appliance)
+    );
+  } else {
+    filteredAppliances = setAppareils;
+  }
+
+  const uniqueAppareils = filteredAppliances.map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
+  globalAppliances = uniqueAppareils;
+
   return uniqueAppareils;
 }
 
-function getUstentiles() {
+export function getUstentiles(input = []) {
   let allUstentiles = [];
+  let filteredUtensils;
   recipes.forEach((recipe) => {
-    allUstentiles.push(...recipe.ustensils);
+    if (!recipe.isHidden) {
+      allUstentiles.push(...recipe.ustensils);
+    }
   });
 
+  allUstentiles.sort();
   allUstentiles = allUstentiles.map((ustencile) =>
     ustencile.trim().toLowerCase()
   );
 
-  let uniqueUstensilesSet = new Set(allUstentiles);
+  let uniqueUstensilesSet = [...new Set(allUstentiles)];
 
-  let uniqueUstensiles = [...uniqueUstensilesSet].map(
+  if (input.length > 0) {
+    let inputLowerCase = input.map((item) => item.toLowerCase());
+
+    filteredUtensils = uniqueUstensilesSet.filter(
+      (utensil) => !inputLowerCase.includes(utensil)
+    );
+  } else {
+    filteredUtensils = uniqueUstensilesSet;
+  }
+  const uniqueUstensiles = [...filteredUtensils].map(
     (str) => str.charAt(0).toUpperCase() + str.slice(1)
   );
+  globalUtensils = uniqueUstensiles;
 
-  uniqueUstensiles.sort();
   return uniqueUstensiles;
 }
 
@@ -153,7 +203,7 @@ function loadIngredientsDropdownInitial(listOfIngredients) {
 
   listOfIngredients.forEach((ingredient) => {
     const listItem = document.createElement("li");
-    listItem.className = "list-ingredient";
+    listItem.className = "list-ingredient dropdown-item";
     listItem.textContent = ingredient;
     dropdown.appendChild(listItem);
   });
@@ -164,7 +214,7 @@ function loadAppliancesDropdownInitial(listOfAppliances) {
 
   listOfAppliances.forEach((appliance) => {
     const listItem = document.createElement("li");
-    listItem.className = "list-appliance";
+    listItem.className = "list-appliance dropdown-item";
     listItem.textContent = appliance;
     dropdown.appendChild(listItem);
   });
@@ -175,34 +225,35 @@ function loadUtensilsDropdownInitial(listOfUtencils) {
 
   listOfUtencils.forEach((utensil) => {
     const listItem = document.createElement("li");
-    listItem.className = "list-utensil";
+    listItem.className = "list-utensil dropdown-item";
     listItem.textContent = utensil;
     dropdown.appendChild(listItem);
   });
-}
-
-function createTotalIngredients() {
-  let totalIngredients = [];
-  recipes.forEach((recipe) => {
-    let object = {};
-    let ingredients = recipe.ingredients;
-    let specificRecipeIngredients = [];
-    object.recipeId = recipe.id;
-    ingredients.forEach((ingredient) => {
-      let someIngredient = ingredient.ingredient.trim();
-      specificRecipeIngredients.push(someIngredient.toLowerCase());
-    });
-    object.ingredients = specificRecipeIngredients;
-    totalIngredients.push(object);
-  });
-
-  return totalIngredients;
 }
 
 function addHiddenProperty() {
   recipesCopy.forEach((recipe) => {
     recipe.isHidden = false;
   });
+}
+
+export function updateRecipeCountText(input) {
+  const textElement = document.querySelector(".recipe-number");
+
+  if (input === -1) {
+    textElement.textContent = `${recipesCopy.length} recettes`;
+  } else {
+    // count the number of recipes where isHidden is false
+    const visibleRecipesCount = recipesCopy.filter(
+      (recipe) => !recipe.isHidden
+    ).length;
+
+    const newText =
+      visibleRecipesCount === 1
+        ? `1 recette`
+        : `${visibleRecipesCount} recettes`;
+    textElement.textContent = newText;
+  }
 }
 
 loadPageInitial();
