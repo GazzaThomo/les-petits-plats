@@ -1,4 +1,4 @@
-import { getIngredients, getAppareils, getUstentiles } from "../script.js";
+import { getIngredients, getAppareils, getUstensiles } from "../script.js";
 
 import {
   searchRecipe,

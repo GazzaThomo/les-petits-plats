@@ -4,7 +4,7 @@ export let globalIngredients, globalAppliances, globalUtensils;
 export let recipesCopy = [...recipes];
 export let listOfIngredients = getIngredients();
 export let listOfAppliances = getAppareils();
-export let listOfUtencils = getUstentiles();
+export let listOfUtencils = getUstensiles();
 
 function loadPageInitial() {
   addHiddenProperty();
@@ -15,28 +15,28 @@ function loadPageInitial() {
 }
 
 function loadRecipeCards() {
-  recipesCopy.forEach((recipe) => {
-    recipe.isHidden = false;
+  for (let i = 0; i < recipesCopy.length; i++) {
+    recipesCopy[i].isHidden = false;
     const cardsContainer = document.querySelector(".recipe-cards-section");
     let card = document.createElement("div");
     card.className = "card";
-    card.setAttribute("data-id", recipe.id);
+    card.setAttribute("data-id", recipesCopy[i].id);
 
     const cardImage = document.createElement("img");
     cardImage.className = "card-img-top";
-    cardImage.src = `./assets/images/plats/${recipe.image}`;
-    cardImage.alt = recipe.name;
+    cardImage.src = `./assets/images/plats/${recipesCopy[i].image}`;
+    cardImage.alt = recipesCopy[i].name;
 
     const cardTime = document.createElement("p");
     cardTime.className = "card-time";
-    cardTime.textContent = `${recipe.time}min`;
+    cardTime.textContent = `${recipesCopy[i].time}min`;
 
     const cardBody = document.createElement("div");
     cardBody.className = "card-body";
 
     const cardTitle = document.createElement("h5");
     cardTitle.className = "card-title";
-    cardTitle.textContent = recipe.name;
+    cardTitle.textContent = recipesCopy[i].name;
 
     const cardDescriptionTitle = document.createElement("p");
     cardDescriptionTitle.className = "card-subsection-title";
@@ -44,7 +44,7 @@ function loadRecipeCards() {
 
     const cardDescription = document.createElement("p");
     cardDescription.className = "card-text";
-    cardDescription.textContent = recipe.description;
+    cardDescription.textContent = recipesCopy[i].description;
 
     const cardIngredientsTitle = document.createElement("p");
     cardIngredientsTitle.className = "card-subsection-title";
@@ -53,27 +53,28 @@ function loadRecipeCards() {
     const cardIngredients = document.createElement("div");
     cardIngredients.className = "ingredients-section";
 
-    const ingredients = recipe.ingredients;
+    const ingredients = recipesCopy[i].ingredients;
 
-    ingredients.forEach((ingredient) => {
+    for (let j = 0; j < ingredients.length; j++) {
       const ingredientSubgroup = document.createElement("div");
       ingredientSubgroup.className = "ingredient-subgroup";
 
       const ingredientName = document.createElement("p");
-      ingredientName.textContent = ingredient.ingredient;
+      ingredientName.textContent = ingredients[j].ingredient;
       ingredientName.className = "ingredient-name";
       ingredientSubgroup.appendChild(ingredientName);
 
       const ingredientQuantity = document.createElement("p");
-      ingredientQuantity.textContent = `${ingredient.quantity ?? ""} ${
-        ingredient.unit ?? ""
+      ingredientQuantity.textContent = `${ingredients[j].quantity ?? ""} ${
+        ingredients[j].unit ?? ""
       }`;
+
       ingredientQuantity.className = "ingredient-quantity";
 
       ingredientSubgroup.appendChild(ingredientQuantity);
 
       cardIngredients.appendChild(ingredientSubgroup);
-    });
+    }
 
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardDescriptionTitle);
@@ -85,8 +86,8 @@ function loadRecipeCards() {
     card.appendChild(cardBody);
 
     cardsContainer.appendChild(card);
-  });
-  updateRecipeCountText(recipesCopy);
+    updateRecipeCountText(recipesCopy);
+  }
 }
 
 export function getIngredients(input = []) {
@@ -94,42 +95,52 @@ export function getIngredients(input = []) {
   let filteredIngredients;
   if (input === -1) input = [];
 
-  recipes.forEach((recipe) => {
-    if (!recipe.isHidden) {
+  for (let i = 0; i < recipes.length; i++) {
+    if (!recipes[i].isHidden) {
       let object = {};
-      let ingredients = recipe.ingredients;
+      let ingredients = recipes[i].ingredients;
       let specificRecipeIngredients = [];
-      object.id = recipe.id;
-      ingredients.forEach((ingredient) => {
-        let someIngredient = ingredient.ingredient.trim();
-        allIngredients.push(someIngredient.toLowerCase());
-        specificRecipeIngredients.push(someIngredient.toLowerCase());
-      });
+      object.id = recipes[i].id;
+      for (let j = 0; j < ingredients.length; j++) {
+        let someIngredient = ingredients[j].ingredient.trim().toLowerCase();
+        allIngredients.push(someIngredient);
+        specificRecipeIngredients.push(someIngredient);
+      }
       object.ingredients = specificRecipeIngredients;
     }
-  });
+  }
 
-  allIngredients = allIngredients.sort();
+  allIngredients.sort();
 
-  //this creates a unique set of all ingredients
-  let setIngredients = [...new Set(allIngredients)];
+  // this creates a unique set of all ingredients
+  let setIngredients = Array.from(new Set(allIngredients));
 
   if (input.length > 0) {
-    //transform the input to lowercase for comparison
-    let inputLowerCase = input.map((item) => item.toLowerCase());
+    // transform the input to lowercase for comparison
+    let inputLowerCase = [];
+    for (let i = 0; i < input.length; i++) {
+      inputLowerCase.push(input[i].toLowerCase());
+    }
 
-    //filter out ingredients that appear in the input. If input is empty array, this does nothing
-    filteredIngredients = setIngredients.filter(
-      (ingredient) => !inputLowerCase.includes(ingredient)
-    );
+    // filter out ingredients that appear in the input
+    filteredIngredients = [];
+    for (let i = 0; i < setIngredients.length; i++) {
+      if (!inputLowerCase.includes(setIngredients[i])) {
+        filteredIngredients.push(setIngredients[i]);
+      }
+    }
   } else {
     filteredIngredients = setIngredients;
   }
 
   // Use this to make the first char of each word uppercase, makes it look nicer
-  const uniqueIngredients = filteredIngredients.map(
-    (str) => str.charAt(0).toUpperCase() + str.slice(1)
-  );
+  let uniqueIngredients = [];
+  for (let i = 0; i < filteredIngredients.length; i++) {
+    uniqueIngredients.push(
+      filteredIngredients[i].charAt(0).toUpperCase() +
+        filteredIngredients[i].slice(1)
+    );
+  }
 
   globalIngredients = uniqueIngredients;
   return uniqueIngredients;
@@ -138,97 +149,119 @@ export function getIngredients(input = []) {
 export function getAppareils(input = []) {
   let allAppareils = [];
   let filteredAppliances;
-  recipes.forEach((appareil) => {
-    if (!appareil.isHidden) {
-      let someAppliance = appareil.appliance.trim();
-      allAppareils.push(someAppliance.toLowerCase());
+
+  for (let i = 0; i < recipes.length; i++) {
+    if (!recipes[i].isHidden) {
+      let someAppliance = recipes[i].appliance.trim().toLowerCase();
+      allAppareils.push(someAppliance);
     }
-  });
+  }
+
   allAppareils.sort();
-  let setAppareils = [...new Set(allAppareils)];
+  let setAppareils = Array.from(new Set(allAppareils));
 
   if (input.length > 0) {
-    let inputLowerCase = input.map((item) => item.toLowerCase());
+    let inputLowerCase = [];
+    for (let i = 0; i < input.length; i++) {
+      inputLowerCase.push(input[i].toLowerCase());
+    }
 
-    filteredAppliances = setAppareils.filter(
-      (appliance) => !inputLowerCase.includes(appliance)
-    );
+    filteredAppliances = [];
+    for (let i = 0; i < setAppareils.length; i++) {
+      if (!inputLowerCase.includes(setAppareils[i])) {
+        filteredAppliances.push(setAppareils[i]);
+      }
+    }
   } else {
     filteredAppliances = setAppareils;
   }
 
-  const uniqueAppareils = filteredAppliances.map(
-    (str) => str.charAt(0).toUpperCase() + str.slice(1)
-  );
-  globalAppliances = uniqueAppareils;
+  let uniqueAppareils = [];
+  for (let i = 0; i < filteredAppliances.length; i++) {
+    uniqueAppareils.push(
+      filteredAppliances[i].charAt(0).toUpperCase() +
+        filteredAppliances[i].slice(1)
+    );
+  }
 
+  globalAppliances = uniqueAppareils;
   return uniqueAppareils;
 }
 
-export function getUstentiles(input = []) {
-  let allUstentiles = [];
+export function getUstensiles(input = []) {
+  let allUstensiles = [];
   let filteredUtensils;
-  recipes.forEach((recipe) => {
-    if (!recipe.isHidden) {
-      allUstentiles.push(...recipe.ustensils);
+
+  for (let i = 0; i < recipes.length; i++) {
+    if (!recipes[i].isHidden) {
+      for (let j = 0; j < recipes[i].ustensils.length; j++) {
+        allUstensiles.push(recipes[i].ustensils[j].trim().toLowerCase());
+      }
     }
-  });
+  }
 
-  allUstentiles.sort();
-  allUstentiles = allUstentiles.map((ustencile) =>
-    ustencile.trim().toLowerCase()
-  );
+  allUstensiles.sort();
 
-  let uniqueUstensilesSet = [...new Set(allUstentiles)];
+  let uniqueUstensilesSet = Array.from(new Set(allUstensiles));
 
   if (input.length > 0) {
-    let inputLowerCase = input.map((item) => item.toLowerCase());
+    let inputLowerCase = [];
+    for (let i = 0; i < input.length; i++) {
+      inputLowerCase.push(input[i].toLowerCase());
+    }
 
-    filteredUtensils = uniqueUstensilesSet.filter(
-      (utensil) => !inputLowerCase.includes(utensil)
-    );
+    filteredUtensils = [];
+    for (let i = 0; i < uniqueUstensilesSet.length; i++) {
+      if (!inputLowerCase.includes(uniqueUstensilesSet[i])) {
+        filteredUtensils.push(uniqueUstensilesSet[i]);
+      }
+    }
   } else {
     filteredUtensils = uniqueUstensilesSet;
   }
-  const uniqueUstensiles = [...filteredUtensils].map(
-    (str) => str.charAt(0).toUpperCase() + str.slice(1)
-  );
-  globalUtensils = uniqueUstensiles;
 
+  let uniqueUstensiles = [];
+  for (let i = 0; i < filteredUtensils.length; i++) {
+    uniqueUstensiles.push(
+      filteredUtensils[i].charAt(0).toUpperCase() + filteredUtensils[i].slice(1)
+    );
+  }
+
+  globalUtensils = uniqueUstensiles;
   return uniqueUstensiles;
 }
 
 function loadIngredientsDropdownInitial(listOfIngredients) {
   const dropdown = document.querySelector(".dropdown-menu-ingredients");
 
-  listOfIngredients.forEach((ingredient) => {
+  for (let i = 0; i < listOfIngredients.length; i++) {
     const listItem = document.createElement("li");
     listItem.className = "list-ingredient dropdown-item";
-    listItem.textContent = ingredient;
+    listItem.textContent = listOfIngredients[i];
     dropdown.appendChild(listItem);
-  });
+  }
 }
 
 function loadAppliancesDropdownInitial(listOfAppliances) {
   const dropdown = document.querySelector(".dropdown-menu-appareils");
 
-  listOfAppliances.forEach((appliance) => {
+  for (let i = 0; i < listOfAppliances.length; i++) {
     const listItem = document.createElement("li");
     listItem.className = "list-appliance dropdown-item";
-    listItem.textContent = appliance;
+    listItem.textContent = listOfAppliances[i];
     dropdown.appendChild(listItem);
-  });
+  }
 }
 
 function loadUtensilsDropdownInitial(listOfUtencils) {
   const dropdown = document.querySelector(".dropdown-menu-ustensils");
 
-  listOfUtencils.forEach((utensil) => {
+  for (let i = 0; i < listOfUtencils.length; i++) {
     const listItem = document.createElement("li");
     listItem.className = "list-utensil dropdown-item";
-    listItem.textContent = utensil;
+    listItem.textContent = listOfUtencils[i];
     dropdown.appendChild(listItem);
-  });
+  }
 }
 
 function addHiddenProperty() {
