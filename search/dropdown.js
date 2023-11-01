@@ -91,12 +91,12 @@ initiateClickedDropdownElements();
 //this function is an eventListener
 function removeBadgeElement(element) {
   element.parentNode.remove();
-  const badgeTextElements = document.querySelectorAll(".badge-text");
-  let badgeText = [];
-  for (let i = 0; i < badgeTextElements.length; i++) {
-    const text = badgeTextElements[i].textContent.toLowerCase();
-    badgeText.push(text);
-  }
+  // const badgeTextElements = document.querySelectorAll(".badge-text");
+  // let badgeText = [];
+  // badgeTextElements.forEach((badge) => {
+  //   const text = badge.textContent.toLowerCase();
+  //   badgeText.push(text);
+  // });
 }
 
 // this is basically to redo the searches on the cards
