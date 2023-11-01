@@ -72,15 +72,12 @@ function hideCards(input) {
   recipeCardsSection.classList.add("hide");
   setTimeout(() => {
     if (input === -1) {
-      for (let i = 0; i < cards.length; i++) {
-        cards[i].style.display = "";
-      }
-      // recipesCopy.forEach((recipe) => {
-      //   recipe.isHidden = false;
-      // });
+      cards.forEach((card) => {
+        card.style.display = "";
+      });
     } else {
-      for (let i = 0; i < cards.length; i++) {
-        const dataId = parseInt(cards[i].getAttribute("data-id"), 10);
+      cards.forEach((card) => {
+        const dataId = parseInt(card.getAttribute("data-id"), 10);
 
         // find the corresponding recipe in recipesCopy
         const correspondingRecipe = recipesCopy.find(
@@ -90,14 +87,14 @@ function hideCards(input) {
         // Check if the recipe was found and then check the isHidden property
         if (correspondingRecipe) {
           if (correspondingRecipe.isHidden) {
-            cards[i].style.display = "none";
+            card.style.display = "none";
           } else {
-            cards[i].style.display = "block";
+            card.style.display = "block";
           }
         } else {
           noCorrespondanceElement.style.display = "block";
         }
-      }
+      });
     }
     recipeCardsSection.classList.remove("hide");
   }, 500);
@@ -117,9 +114,9 @@ export function getMainSearchbarWords(inputElement) {
 export function getAllBadgeText() {
   const badges = document.querySelectorAll(".badge-text");
   let badgeText = [];
-  for (let i = 0; i < badges.length; i++) {
-    badgeText.push(badges[i].textContent);
-  }
+  badges.forEach((badge) => {
+    badgeText.push(badge.textContent);
+  });
 
   return badgeText;
 }

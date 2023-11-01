@@ -5,15 +5,9 @@ import {
 } from "./mainSearch.js";
 
 import {
-  listOfAppliances,
-  listOfIngredients,
-  listOfUtencils,
   globalIngredients,
   globalAppliances,
   globalUtensils,
-  getIngredients,
-  getAppareils,
-  getUstentiles,
 } from "../script.js";
 
 const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
@@ -53,7 +47,6 @@ function initiateClickedDropdownElements() {
 function dropdownElementClicked(element) {
   addBadgeElement(element.textContent);
   handleBadgeChange();
-  removeElementFromDropdown(element);
   clearDropdownInputField(element);
 }
 
@@ -74,11 +67,8 @@ function addBadgeElement(word) {
   badge.appendChild(cross);
   badgeSection.appendChild(badge);
 
-  // mainDropdownSearch(inputWords, word);
-
   cross.addEventListener("click", function () {
     removeBadgeElement(this);
-    addElementBackToDropdown(this);
     handleBadgeChange();
   });
 }
@@ -109,30 +99,6 @@ function removeBadgeElement(element) {
   }
 }
 
-//this function is an eventListener
-function addElementBackToDropdown(element) {
-  const text = element.previousSibling.textContent;
-
-  if (listOfIngredients.includes(text)) {
-    findElementInDropdown(dropdownIngredientList, text);
-  } else if (listOfAppliances.includes(text)) {
-    findElementInDropdown(dropdownApplianceList, text);
-  } else if (listOfUtencils.includes(text)) {
-    findElementInDropdown(dropdownUtensilsList, text);
-  } else {
-    return;
-  }
-}
-
-function findElementInDropdown(nodeListInHTML, text) {
-  for (let i = 0; i < nodeListInHTML.length; i++) {
-    if (nodeListInHTML[i].textContent === text) {
-      nodeListInHTML[i].style.display = "block";
-      return;
-    }
-  }
-}
-
 // this is basically to redo the searches on the cards
 function handleBadgeChange() {
   const searchbarElement = document.querySelector(".main-search-bar");
@@ -143,7 +109,6 @@ function handleBadgeChange() {
 }
 
 //dropdown search
-
 export function filterDropdownItems(inputElement) {
   let inputText;
   let currentFilteredList;
