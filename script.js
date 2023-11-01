@@ -276,10 +276,10 @@ export function updateRecipeCountText(input) {
   if (input === -1) {
     textElement.textContent = `${recipesCopy.length} recettes`;
   } else {
-    // count the number of recipes where isHidden is false
-    const visibleRecipesCount = recipesCopy.filter(
-      (recipe) => !recipe.isHidden
-    ).length;
+    let visibleRecipesCount = 0;
+    for (let i = 0; i < recipesCopy.length; i++) {
+      if (!recipesCopy[i].isHidden) visibleRecipesCount++;
+    }
 
     const newText =
       visibleRecipesCount === 1

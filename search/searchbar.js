@@ -23,7 +23,7 @@ export function reloadDropdownsOnMainSearch(input) {
 
   const newIngredientList = getIngredients(input);
   const newApplianceList = getAppareils(input);
-  const newUtensilList = getUstentiles(input);
+  const newUtensilList = getUstensiles(input);
 
   if (input === -1) {
     for (let i = 0; i < dropdownIngredientList.length; i++) {

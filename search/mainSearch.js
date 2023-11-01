@@ -21,18 +21,17 @@ function changeIsHiddenProperty(words) {
     for (let i = 0; i < recipesCopy.length; i++) {
       const recipe = recipesCopy[i];
       const wordsArePresent = words.every((word) => wordInRecipe(word, recipe));
-      
+
       if (!wordsArePresent) {
-          // console.log(recipe.name + " is hidden");
-          recipe.isHidden = true;
+        // console.log(recipe.name + " is hidden");
+        recipe.isHidden = true;
       } else {
-          // console.log(recipe.name + " is NOT hidden");
-          recipe.isHidden = false;
+        // console.log(recipe.name + " is NOT hidden");
+        recipe.isHidden = false;
       }
-  }
-  
+    }
   } else {
-    for (let i = 0 ; i< recipesCopy.length;i++){
+    for (let i = 0; i < recipesCopy.length; i++) {
       recipesCopy[i].isHidden = false;
     }
   }
@@ -74,12 +73,12 @@ function hideCards(input) {
   recipeCardsSection.classList.add("hide");
   setTimeout(() => {
     if (input === -1) {
-      for (let i = 0 ; i< cards.length ; i++){
+      for (let i = 0; i < cards.length; i++) {
         cards[i].style.display = "";
       }
     } else {
-      for (let i = 0; i<cards.length;i++){
-        let card = cards[i]
+      for (let i = 0; i < cards.length; i++) {
+        let card = cards[i];
         const dataId = parseInt(card.getAttribute("data-id"), 10);
 
         // find the corresponding recipe in recipesCopy
@@ -106,10 +105,14 @@ function hideCards(input) {
 // helper functions for the other js files
 export function getMainSearchbarWords(inputElement) {
   const input = inputElement.value.toLowerCase();
-  const inputWords = input
-    .trim()
-    .split(" ")
-    .filter((word) => word.length > 0);
+  const words = input.trim().split(" ");
+  const inputWords = [];
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].length > 0) {
+      inputWords.push(words[i]);
+    }
+  }
 
   return inputWords;
 }
@@ -117,8 +120,8 @@ export function getMainSearchbarWords(inputElement) {
 export function getAllBadgeText() {
   const badges = document.querySelectorAll(".badge-text");
   let badgeText = [];
-  for (let i=0;i<badges.length;i++){
-badgeText.push(badges[i].textContent)
+  for (let i = 0; i < badges.length; i++) {
+    badgeText.push(badges[i].textContent);
   }
 
   return badgeText;
