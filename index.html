@@ -37,12 +37,21 @@
                 aria-label="Rechercher une recette, un ingrédient..."
                 aria-describedby="loupe-rechercher"
               />
-              <span class="input-group-text" id="loupe-rechercher"
-                ><img
-                  src="./assets/images/icons/search.svg"
-                  alt="loupe rechercher"
-                  id="loupe"
-              /></span>
+              <div class="searchbar-icons">
+                <span id="cross-searchbar">
+                  <img
+                    src="./assets/images/icons/cross.svg"
+                    alt="croix pour réinitialiser la barre de recherche"
+                    id="img-cross-searchbar"
+                  />
+                </span>
+                <span class="input-group-text" id="loupe-rechercher"
+                  ><img
+                    src="./assets/images/icons/search.svg"
+                    alt="loupe rechercher"
+                    id="img-loupe-rechercher"
+                /></span>
+              </div>
             </div>
           </div>
         </div>
@@ -68,6 +77,11 @@
                     type="text"
                     class="dropdown-search-input dropdown-search-input__ingredients"
                   />
+                  <span class="dropdown-cross"
+                    ><img
+                      src="./assets/images/icons/cross.svg"
+                      alt="croix pour réinitialiser la barre de recherche de la liste déroulante"
+                  /></span>
                 </li>
               </ul>
             </div>
@@ -90,6 +104,11 @@
                     type="text"
                     class="dropdown-search-input dropdown-search-input__appareils"
                   />
+                  <span class="dropdown-cross"
+                    ><img
+                      src="./assets/images/icons/cross.svg"
+                      alt="croix pour réinitialiser la barre de recherche de la liste déroulante"
+                  /></span>
                 </li>
               </ul>
             </div>
@@ -112,6 +131,11 @@
                     type="text"
                     class="dropdown-search-input dropdown-search-input__utensils"
                   />
+                  <span class="dropdown-cross"
+                    ><img
+                      src="./assets/images/icons/cross.svg"
+                      alt="croix pour réinitialiser la barre de recherche de la liste déroulante"
+                  /></span>
                 </li>
               </ul>
             </div>
