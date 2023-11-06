@@ -1,4 +1,9 @@
-import { getIngredients, getAppareils, getUstentiles } from "../script.js";
+import {
+  getIngredients,
+  getAppareils,
+  getUstentiles,
+  checkForMaliciousInput,
+} from "../script.js";
 
 import {
   searchRecipe,
@@ -13,7 +18,13 @@ function handleInputChangeMainSearchbar(e) {
   const inputWords = getMainSearchbarWords(e.target);
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
-  searchRecipe(allSearchWords);
+  const isMalicious = checkForMaliciousInput(allSearchWords);
+  if (isMalicious) {
+    console.log("Malicious input attempt !");
+    return;
+  } else {
+    searchRecipe(allSearchWords);
+  }
 }
 
 export function reloadDropdownsOnMainSearch(input) {

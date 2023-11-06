@@ -8,6 +8,7 @@ import {
   globalIngredients,
   globalAppliances,
   globalUtensils,
+  checkForMaliciousInput,
 } from "../script.js";
 
 const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
@@ -73,10 +74,6 @@ function addBadgeElement(word) {
   });
 }
 
-function removeElementFromDropdown(element) {
-  element.style.display = "none";
-}
-
 function clearDropdownInputField(element) {
   let closestSearchElement = element
     .closest(".dropdown")
@@ -91,12 +88,6 @@ initiateClickedDropdownElements();
 //this function is an eventListener
 function removeBadgeElement(element) {
   element.parentNode.remove();
-  // const badgeTextElements = document.querySelectorAll(".badge-text");
-  // let badgeText = [];
-  // badgeTextElements.forEach((badge) => {
-  //   const text = badge.textContent.toLowerCase();
-  //   badgeText.push(text);
-  // });
 }
 
 // this is basically to redo the searches on the cards
@@ -105,54 +96,67 @@ function handleBadgeChange() {
   const inputWords = getMainSearchbarWords(searchbarElement);
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
-  searchRecipe(allSearchWords);
+  const isMalicious = checkForMaliciousInput(allSearchWords);
+
+  if (isMalicious) {
+    console.log("Malicious input attempt !");
+    return;
+  } else {
+    searchRecipe(allSearchWords);
+  }
 }
 
 //dropdown search
 export function filterDropdownItems(inputElement) {
-  let inputText;
-  let currentFilteredList;
-  inputText = inputElement.value.toLowerCase();
+  const isMalicious = checkForMaliciousInput(inputElement.value);
+  if (isMalicious) {
+    console.log("Possible malicious entry detected!");
+    return;
+  } else {
+    let inputText;
+    let currentFilteredList;
+    inputText = inputElement.value.toLowerCase();
 
-  //find type of list (ingredient, appliance or utensil)
-  let dropdownType = inputElement
-    .closest(".dropdown")
-    .getAttribute("data-type");
+    //find type of list (ingredient, appliance or utensil)
+    let dropdownType = inputElement
+      .closest(".dropdown")
+      .getAttribute("data-type");
 
-  //set filtered list to be the one corresponding to the dropdown
-  switch (dropdownType) {
-    case "drop-ingredients":
-      currentFilteredList = globalIngredients;
-      break;
-    case "drop-appareils":
-      currentFilteredList = globalAppliances;
-      break;
-    case "drop-ustensiles":
-      currentFilteredList = globalUtensils;
-      break;
-    default:
-      currentFilteredList = [];
+    //set filtered list to be the one corresponding to the dropdown
+    switch (dropdownType) {
+      case "drop-ingredients":
+        currentFilteredList = globalIngredients;
+        break;
+      case "drop-appareils":
+        currentFilteredList = globalAppliances;
+        break;
+      case "drop-ustensiles":
+        currentFilteredList = globalUtensils;
+        break;
+      default:
+        currentFilteredList = [];
+    }
+
+    //find all dropdown items within the same dropdown as the input element
+    let dropdownItems = inputElement
+      .closest(".dropdown")
+      .querySelectorAll(".dropdown-item");
+
+    dropdownItems.forEach((item) => {
+      //if a word is in the inputbox, check that each item(from dropdown list) contains the word, plus that the item is in the filtered list(global list)
+      if (
+        inputText &&
+        item.textContent.toLowerCase().includes(inputText) &&
+        currentFilteredList.includes(item.textContent)
+      ) {
+        item.style.display = "";
+      }
+      //this is for no word. Just check that the item is in the filtered list
+      else if (!inputText && currentFilteredList.includes(item.textContent)) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    });
   }
-
-  //find all dropdown items within the same dropdown as the input element
-  let dropdownItems = inputElement
-    .closest(".dropdown")
-    .querySelectorAll(".dropdown-item");
-
-  dropdownItems.forEach((item) => {
-    //if a word is in the inputbox, check that each item(from dropdown list) contains the word, plus that the item is in the filtered list(global list)
-    if (
-      inputText &&
-      item.textContent.toLowerCase().includes(inputText) &&
-      currentFilteredList.includes(item.textContent)
-    ) {
-      item.style.display = "";
-    }
-    //this is for no word. Just check that the item is in the filtered list
-    else if (!inputText && currentFilteredList.includes(item.textContent)) {
-      item.style.display = "";
-    } else {
-      item.style.display = "none";
-    }
-  });
 }
