@@ -82,6 +82,18 @@ nav {
   background-color: #ffd15b;
 }
 
+#cross-searchbar {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.searchbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .form-control.search-input-area {
   border: none;
   outline: none;
@@ -100,6 +112,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  column-gap: 10px;
   row-gap: 66px;
   transition: opacity 250ms ease-in-out;
   opacity: 1;
@@ -212,14 +225,32 @@ h2 {
 
 .dropdown-search-input {
   width: 100%;
+  position: relative;
+  padding-right: 40px;
+}
+
+.dropdown-icons {
+  display: inline-block;
+  position: absolute;
+  right: 22px;
+}
+
+.dropdown-cross img {
+  transform: scale(0.5);
 }
 
 .drop-custom,
+.drop-custom:focus,
+.drop-custom:active,
+.drop-custom.show,
 .drop-custom:hover,
-.drop-custom:active {
-  background-color: #fff;
-  color: #1b1b1b;
-  border-color: #fff;
+.dropdown-toggle:focus,
+.dropdown-toggle.show,
+.dropdown-toggle:hover,
+.dropdown-toggle:active {
+  background-color: #fff !important;
+  color: #1b1b1b !important;
+  border-color: #fff !important;
 }
 
 .dropdown-menu {

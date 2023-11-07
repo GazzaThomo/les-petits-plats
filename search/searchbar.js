@@ -13,7 +13,18 @@ function handleInputChangeMainSearchbar(e) {
   const inputWords = getMainSearchbarWords(e.target);
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
-  searchRecipe(allSearchWords);
+  const isMalicious = checkForMaliciousInput(allSearchWords);
+  if (isMalicious) {
+    console.log("Malicious input attempt !");
+    return;
+  } else {
+    if (inputWords.some((word) => word.length >= 3)) {
+      searchRecipe(allSearchWords);
+    } else {
+      searchRecipe(badgeWords);
+    }
+    // searchRecipe(inputWords,badgeWords)
+  }
 }
 
 export function reloadDropdownsOnMainSearch(input) {

@@ -6,6 +6,7 @@
     <title>Les petits plats - Accueil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/x-icon" href="./assets/images/logoBadge.svg" />
     <link
       href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -37,12 +38,21 @@
                 aria-label="Rechercher une recette, un ingrédient..."
                 aria-describedby="loupe-rechercher"
               />
-              <span class="input-group-text" id="loupe-rechercher"
-                ><img
-                  src="./assets/images/icons/search.svg"
-                  alt="loupe rechercher"
-                  id="loupe"
-              /></span>
+              <div class="searchbar-icons">
+                <span id="cross-searchbar">
+                  <img
+                    src="./assets/images/icons/cross.svg"
+                    alt="croix pour réinitialiser la barre de recherche"
+                    id="img-cross-searchbar"
+                  />
+                </span>
+                <span class="input-group-text" id="loupe-rechercher"
+                  ><img
+                    src="./assets/images/icons/search.svg"
+                    alt="loupe rechercher"
+                    id="img-loupe-rechercher"
+                /></span>
+              </div>
             </div>
           </div>
         </div>
@@ -68,6 +78,19 @@
                     type="text"
                     class="dropdown-search-input dropdown-search-input__ingredients"
                   />
+                  <div class="dropdown-icons">
+                    <span class="dropdown-cross"
+                      ><img
+                        src="./assets/images/icons/cross.svg"
+                        alt="croix pour réinitialiser la barre de recherche de la liste déroulante"
+                    /></span>
+                    <span class="dropdown-loupe"
+                      ><img
+                        src="./assets/images/icons/loupe.svg"
+                        alt="icone d'une loupe"
+                      />
+                    </span>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -90,6 +113,19 @@
                     type="text"
                     class="dropdown-search-input dropdown-search-input__appareils"
                   />
+                  <div class="dropdown-icons">
+                    <span class="dropdown-cross"
+                      ><img
+                        src="./assets/images/icons/cross.svg"
+                        alt="croix pour réinitialiser la barre de recherche de la liste déroulante"
+                    /></span>
+                    <span class="dropdown-loupe"
+                      ><img
+                        src="./assets/images/icons/loupe.svg"
+                        alt="icone d'une loupe"
+                      />
+                    </span>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -112,6 +148,19 @@
                     type="text"
                     class="dropdown-search-input dropdown-search-input__utensils"
                   />
+                  <div class="dropdown-icons">
+                    <span class="dropdown-cross"
+                      ><img
+                        src="./assets/images/icons/cross.svg"
+                        alt="croix pour réinitialiser la barre de recherche de la liste déroulante"
+                    /></span>
+                    <span class="dropdown-loupe"
+                      ><img
+                        src="./assets/images/icons/loupe.svg"
+                        alt="icone d'une loupe"
+                      />
+                    </span>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -139,8 +188,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="script.js" type="module" defer></script>
-    <script src="./search/searchBar.js" type="module" defer></script>
-    <script src="./search/mainSearch.js" type="module" defer></script>
-    <script src="./search/dropdown.js" type="module" defer></script>
+    <script type="module" src="./search/dropdown.js" defer></script>
+    <script type="module" src="./search/searchbar.js" defer></script>
+    <script type="module" src="./search/mainSearch.js" defer></script>
   </body>
 </html>
