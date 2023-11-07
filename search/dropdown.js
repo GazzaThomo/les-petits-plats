@@ -8,6 +8,7 @@ import {
   globalIngredients,
   globalAppliances,
   globalUtensils,
+  checkForMaliciousInput,
 } from "../script.js";
 
 const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
