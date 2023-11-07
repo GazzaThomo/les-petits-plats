@@ -105,7 +105,14 @@ function handleBadgeChange() {
   const inputWords = getMainSearchbarWords(searchbarElement);
   const badgeWords = getAllBadgeText();
   const allSearchWords = [...inputWords, ...badgeWords];
-  searchRecipe(allSearchWords);
+  const isMalicious = checkForMaliciousInput(allSearchWords);
+
+  if (isMalicious) {
+    console.log("Malicious input attempt !");
+    return;
+  } else {
+    searchRecipe(allSearchWords);
+  }
 }
 
 //dropdown search
