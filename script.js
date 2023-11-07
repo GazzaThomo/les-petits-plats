@@ -12,6 +12,7 @@ function loadPageInitial() {
   loadIngredientsDropdownInitial(listOfIngredients);
   loadAppliancesDropdownInitial(listOfAppliances);
   loadUtensilsDropdownInitial(listOfUtencils);
+  iconEventListeners();
 }
 
 function loadRecipeCards() {
@@ -270,3 +271,25 @@ export function checkForMaliciousInput(inputArray) {
 }
 
 loadPageInitial();
+
+function iconEventListeners() {
+  const crossMainSearchbar = document.getElementById("img-cross-searchbar");
+  const allDropdownCross = document.querySelectorAll(".dropdown-cross img");
+
+  crossMainSearchbar.addEventListener("click", function () {
+    const input = document.querySelector(".search-input-area");
+    input.value = "";
+  });
+
+  for (let i = 0; i < allDropdownCross.length; i++) {
+    allDropdownCross[i].addEventListener("click", function () {
+      //this is to stop the dropdown from closing when you click on the x
+      event.stopPropagation();
+
+      //need to use this method, can't use closest because input is a sibling, not an ancestor
+      const parentLi = allDropdownCross[i].closest("li");
+      const inputInLi = parentLi.querySelector("input");
+      inputInLi.value = "";
+    });
+  }
+}
