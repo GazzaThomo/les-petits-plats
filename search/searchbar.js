@@ -23,7 +23,12 @@ function handleInputChangeMainSearchbar(e) {
     console.log("Malicious input attempt !");
     return;
   } else {
-    searchRecipe(allSearchWords);
+    if (inputWords.some((word) => word.length >= 3)) {
+      searchRecipe(allSearchWords);
+    } else {
+      searchRecipe(badgeWords);
+    }
+    // searchRecipe(inputWords,badgeWords)
   }
 }
 

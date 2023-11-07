@@ -3,7 +3,9 @@ import { recipesCopy, updateRecipeCountText } from "../script.js";
 
 //main search function
 export function searchRecipe(arrayOfStrings) {
-  if (arrayOfStrings.some((word) => word.length >= 3)) {
+  console.log(arrayOfStrings);
+  // arrayOfStrings.some((word) => word.length >= 3)
+  if (arrayOfStrings.length > 0) {
     changeIsHiddenProperty(arrayOfStrings);
     hideCards();
     reloadDropdownsOnMainSearch(arrayOfStrings);
