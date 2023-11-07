@@ -226,20 +226,31 @@ h2 {
 .dropdown-search-input {
   width: 100%;
   position: relative;
+  padding-right: 40px;
 }
 
-.dropdown-cross {
+.dropdown-icons {
+  display: inline-block;
   position: absolute;
   right: 22px;
-  transform: scale(0.75);
+}
+
+.dropdown-cross img {
+  transform: scale(0.5);
 }
 
 .drop-custom,
+.drop-custom:focus,
+.drop-custom:active,
+.drop-custom.show,
 .drop-custom:hover,
-.drop-custom:active {
-  background-color: #fff;
-  color: #1b1b1b;
-  border-color: #fff;
+.dropdown-toggle:focus,
+.dropdown-toggle.show,
+.dropdown-toggle:hover,
+.dropdown-toggle:active {
+  background-color: #fff !important;
+  color: #1b1b1b !important;
+  border-color: #fff !important;
 }
 
 .dropdown-menu {
