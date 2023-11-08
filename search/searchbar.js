@@ -38,6 +38,7 @@ export function reloadDropdownsOnMainSearch(input) {
   const dropdownUtensilList = document.querySelectorAll(".list-utensil");
 
   const newIngredientList = getIngredients(input);
+  console.log(newIngredientList);
   const newApplianceList = getAppareils(input);
   const newUtensilList = getUstentiles(input);
 

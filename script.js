@@ -95,7 +95,7 @@ export function getIngredients(input = []) {
   let filteredIngredients;
   if (input === -1) input = [];
 
-  recipes.forEach((recipe) => {
+  recipesCopy.forEach((recipe) => {
     if (!recipe.isHidden) {
       let object = {};
       let ingredients = recipe.ingredients;
@@ -133,6 +133,7 @@ export function getIngredients(input = []) {
   );
 
   globalIngredients = uniqueIngredients;
+  console.log(uniqueIngredients);
   return uniqueIngredients;
 }
 
