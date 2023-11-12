@@ -1,6 +1,5 @@
 import { recipes } from "./recipes.js";
 import { reloadDropdownsOnMainSearch } from "./search/dropdown.js";
-import { searchRecipe } from "./search/mainSearch.js";
 import * as Helpers from "./helpers.js";
 
 export let globalIngredients, globalAppliances, globalUtensils;
@@ -245,12 +244,11 @@ function addHiddenProperty() {
 function iconEventListeners() {
   const crossMainSearchbar = document.getElementById("img-cross-searchbar");
   const allDropdownCross = document.querySelectorAll(".dropdown-cross img");
-  const searchbarElement = document.querySelector(".main-search-bar");
 
   crossMainSearchbar.addEventListener("click", function () {
     const input = document.querySelector(".search-input-area");
     input.value = "";
-    Helpers.newSearch(searchbarElement, searchRecipe);
+    Helpers.newSearch();
   });
 
   for (let i = 0; i < allDropdownCross.length; i++) {
