@@ -1,20 +1,19 @@
-import { reloadDropdownsOnMainSearch } from "./searchbar.js";
-import { recipesCopy, updateRecipeCountText } from "../script.js";
+import { reloadDropdownsOnMainSearch } from "./dropdown.js";
+import { recipesCopy } from "../script.js";
+import * as Helpers from "../helpers.js";
 
 //main search function
 export function searchRecipe(arrayOfStrings) {
-  console.log(arrayOfStrings);
-  // arrayOfStrings.some((word) => word.length >= 3)
   if (arrayOfStrings.length > 0) {
     changeIsHiddenProperty(arrayOfStrings);
     hideCards();
     reloadDropdownsOnMainSearch(arrayOfStrings);
-    updateRecipeCountText();
+    Helpers.updateRecipeCountText();
   } else {
     changeIsHiddenProperty([]);
     hideCards(-1);
     reloadDropdownsOnMainSearch(-1);
-    updateRecipeCountText(-1);
+    Helpers.updateRecipeCountText(-1);
   }
 }
 
@@ -23,11 +22,8 @@ function changeIsHiddenProperty(words) {
     recipesCopy.forEach((recipe) => {
       const wordsArePresent = words.every((word) => wordInRecipe(word, recipe));
       if (!wordsArePresent) {
-        // console.log(recipe.name + " is hidden");
         recipe.isHidden = true;
       } else {
-        // console.log(recipe.name + " is NOT hidden");
-
         recipe.isHidden = false;
       }
     });
@@ -105,25 +101,4 @@ function hideCards(input) {
     }
     recipeCardsSection.classList.remove("hide");
   }, 500);
-}
-
-// helper functions for the other js files
-export function getMainSearchbarWords(inputElement) {
-  const input = inputElement.value.toLowerCase();
-  const inputWords = input
-    .trim()
-    .split(" ")
-    .filter((word) => word.length > 0);
-
-  return inputWords;
-}
-
-export function getAllBadgeText() {
-  const badges = document.querySelectorAll(".badge-text");
-  let badgeText = [];
-  badges.forEach((badge) => {
-    badgeText.push(badge.textContent);
-  });
-
-  return badgeText;
 }

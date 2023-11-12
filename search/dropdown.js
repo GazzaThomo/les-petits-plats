@@ -1,25 +1,22 @@
 import {
-  searchRecipe,
-  getMainSearchbarWords,
-  getAllBadgeText,
-} from "./mainSearch.js";
-
-import {
   globalIngredients,
   globalAppliances,
   globalUtensils,
-  checkForMaliciousInput,
+  getIngredients,
+  getAppareils,
+  getUstentiles,
 } from "../script.js";
 
-const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
-const dropdownApplianceList = document.querySelectorAll(".list-appliance");
-const dropdownUtensilsList = document.querySelectorAll(".list-utensil");
-
-const dropdownInputBoxElements = document.querySelectorAll(
-  ".dropdown-search-input"
-);
+import * as Helpers from "../helpers.js";
 
 function initiateClickedDropdownElements() {
+  const dropdownInputBoxElements = document.querySelectorAll(
+    ".dropdown-search-input"
+  );
+  const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
+  const dropdownApplianceList = document.querySelectorAll(".list-appliance");
+  const dropdownUtensilsList = document.querySelectorAll(".list-utensil");
+  console.log(dropdownIngredientList.length);
   for (let i = 0; i < dropdownIngredientList.length; i++) {
     dropdownIngredientList[i].addEventListener("click", function () {
       dropdownElementClicked(this);
@@ -43,6 +40,7 @@ function initiateClickedDropdownElements() {
       filterDropdownItems(this);
     });
   }
+  console.log("initiate");
 }
 
 function dropdownElementClicked(element) {
@@ -81,8 +79,6 @@ function clearDropdownInputField(element) {
   closestSearchElement.value = "";
 }
 
-initiateClickedDropdownElements();
-
 //************ REMOVING BADGES SECTION **************//
 //this function is initialised at every badge creation
 //this function is an eventListener
@@ -92,28 +88,12 @@ function removeBadgeElement(element) {
 
 // this is basically to redo the searches on the cards
 function handleBadgeChange() {
-  const searchbarElement = document.querySelector(".main-search-bar");
-  const inputWords = getMainSearchbarWords(searchbarElement);
-  const badgeWords = getAllBadgeText();
-  const allSearchWords = [...inputWords, ...badgeWords];
-  const isMalicious = checkForMaliciousInput(allSearchWords);
-
-  if (isMalicious) {
-    console.log("Malicious input attempt !");
-    return;
-  } else {
-    if (inputWords.some((word) => word.length >= 3)) {
-      searchRecipe(allSearchWords);
-    } else {
-      searchRecipe(badgeWords);
-    }
-    // searchRecipe(inputWords,badgeWords)
-  }
+  Helpers.newSearch();
 }
 
 //dropdown search
 export function filterDropdownItems(inputElement) {
-  const isMalicious = checkForMaliciousInput(inputElement.value);
+  const isMalicious = Helpers.checkForMaliciousInput(inputElement.value);
   if (isMalicious) {
     console.log("Possible malicious entry detected!");
     return;
@@ -165,3 +145,43 @@ export function filterDropdownItems(inputElement) {
     });
   }
 }
+
+export function reloadDropdownsOnMainSearch(input) {
+  const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
+  const dropdownApplianceList = document.querySelectorAll(".list-appliance");
+  const dropdownUtensilList = document.querySelectorAll(".list-utensil");
+
+  const newIngredientList = getIngredients(input);
+  const newApplianceList = getAppareils(input);
+  const newUtensilList = getUstentiles(input);
+
+  dropdownIngredientList.forEach((item) => {
+    const value = item.textContent;
+    const isIncluded = newIngredientList.includes(value);
+    hideListItemsInDropdowns(isIncluded, item);
+  });
+
+  dropdownApplianceList.forEach((item) => {
+    const value = item.textContent;
+    const isIncluded = newApplianceList.includes(value);
+    hideListItemsInDropdowns(isIncluded, item);
+  });
+
+  dropdownUtensilList.forEach((item) => {
+    const value = item.textContent;
+    const isIncluded = newUtensilList.includes(value);
+    hideListItemsInDropdowns(isIncluded, item);
+  });
+}
+
+function hideListItemsInDropdowns(isIncluded, item) {
+  if (isIncluded) {
+    item.style.display = "";
+  } else {
+    item.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initiateClickedDropdownElements();
+});

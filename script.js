@@ -1,10 +1,7 @@
 import { recipes } from "./recipes.js";
-import { reloadDropdownsOnMainSearch } from "./search/searchbar.js";
-import {
-  getMainSearchbarWords,
-  getAllBadgeText,
-  searchRecipe,
-} from "./search/mainSearch.js";
+import { reloadDropdownsOnMainSearch } from "./search/dropdown.js";
+import { searchRecipe } from "./search/mainSearch.js";
+import * as Helpers from "./helpers.js";
 
 export let globalIngredients, globalAppliances, globalUtensils;
 export let recipesCopy = [...recipes];
@@ -93,7 +90,7 @@ function loadRecipeCards() {
 
     cardsContainer.appendChild(card);
   });
-  updateRecipeCountText(recipesCopy);
+  Helpers.updateRecipeCountText(recipesCopy);
 }
 
 export function getIngredients(input = []) {
@@ -139,7 +136,6 @@ export function getIngredients(input = []) {
   );
 
   globalIngredients = uniqueIngredients;
-  console.log(uniqueIngredients);
   return uniqueIngredients;
 }
 
@@ -245,75 +241,21 @@ function addHiddenProperty() {
   });
 }
 
-export function updateRecipeCountText(input) {
-  const textElement = document.querySelector(".recipe-number");
-
-  if (input === -1) {
-    textElement.textContent = `${recipesCopy.length} recettes`;
-  } else {
-    // count the number of recipes where isHidden is false
-    const visibleRecipesCount = recipesCopy.filter(
-      (recipe) => !recipe.isHidden
-    ).length;
-
-    const newText =
-      visibleRecipesCount === 1
-        ? `1 recette`
-        : `${visibleRecipesCount} recettes`;
-    textElement.textContent = newText;
-  }
-}
-
-export function checkForMaliciousInput(inputArray) {
-  //this pattern checks for the basic sql commands
-  const pattern =
-    /('|;|--|\b(OR|SELECT|INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|EXEC|EXECUTE)\b)/i;
-
-  for (const item of inputArray) {
-    if (typeof item === "string" && pattern.test(item)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-loadPageInitial();
-
+//this initializes the event listeners for the crosses in the searchbar and the dropdowns
 function iconEventListeners() {
   const crossMainSearchbar = document.getElementById("img-cross-searchbar");
   const allDropdownCross = document.querySelectorAll(".dropdown-cross img");
-
-  function allWords() {
-    const searchbarElement = document.querySelector(".main-search-bar");
-    const inputWords = getMainSearchbarWords(searchbarElement);
-    const badgeWords = getAllBadgeText();
-    const allSearchWords = [...inputWords, ...badgeWords];
-    const isMalicious = checkForMaliciousInput(allSearchWords);
-
-    if (isMalicious) {
-      console.log("Malicious input attempt !");
-      return;
-    } else {
-      if (inputWords.some((word) => word.length >= 3)) {
-        searchRecipe(allSearchWords);
-      } else {
-        searchRecipe(badgeWords);
-      }
-    }
-  }
+  const searchbarElement = document.querySelector(".main-search-bar");
 
   crossMainSearchbar.addEventListener("click", function () {
     const input = document.querySelector(".search-input-area");
     input.value = "";
-    allWords();
+    Helpers.newSearch(searchbarElement, searchRecipe);
   });
 
   for (let i = 0; i < allDropdownCross.length; i++) {
-    allDropdownCross[i].addEventListener("click", function () {
-      //this is to stop the dropdown from closing when you click on the x
+    allDropdownCross[i].addEventListener("click", function (event) {
       event.stopPropagation();
-
-      //need to use this method, can't use closest because input is a sibling, not an ancestor
       const parentLi = allDropdownCross[i].closest("li");
       const inputInLi = parentLi.querySelector("input");
       inputInLi.value = "";
@@ -321,3 +263,5 @@ function iconEventListeners() {
     });
   }
 }
+
+loadPageInitial();
