@@ -98,11 +98,9 @@ function hideCards(input) {
       });
 
       if (visibleRecipesCount === 0) {
-        console.log("inside if");
-        noCorrespondanceElement.style.display = "flex";
+        noCorrespondanceElement.classList.add("show");
       } else {
-        console.log("inside else");
-        noCorrespondanceElement.style.display = "";
+        noCorrespondanceElement.classList.remove("show");
       }
     }
     recipeCardsSection.classList.remove("hide");
