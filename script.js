@@ -1,4 +1,10 @@
 import { recipes } from "./recipes.js";
+import { reloadDropdownsOnMainSearch } from "./search/searchbar.js";
+import {
+  getMainSearchbarWords,
+  getAllBadgeText,
+  searchRecipe,
+} from "./search/mainSearch.js";
 
 export let globalIngredients, globalAppliances, globalUtensils;
 export let recipesCopy = [...recipes];
@@ -277,9 +283,29 @@ function iconEventListeners() {
   const crossMainSearchbar = document.getElementById("img-cross-searchbar");
   const allDropdownCross = document.querySelectorAll(".dropdown-cross img");
 
+  function allWords() {
+    const searchbarElement = document.querySelector(".main-search-bar");
+    const inputWords = getMainSearchbarWords(searchbarElement);
+    const badgeWords = getAllBadgeText();
+    const allSearchWords = [...inputWords, ...badgeWords];
+    const isMalicious = checkForMaliciousInput(allSearchWords);
+
+    if (isMalicious) {
+      console.log("Malicious input attempt !");
+      return;
+    } else {
+      if (inputWords.some((word) => word.length >= 3)) {
+        searchRecipe(allSearchWords);
+      } else {
+        searchRecipe(badgeWords);
+      }
+    }
+  }
+
   crossMainSearchbar.addEventListener("click", function () {
     const input = document.querySelector(".search-input-area");
     input.value = "";
+    allWords();
   });
 
   for (let i = 0; i < allDropdownCross.length; i++) {
@@ -291,6 +317,7 @@ function iconEventListeners() {
       const parentLi = allDropdownCross[i].closest("li");
       const inputInLi = parentLi.querySelector("input");
       inputInLi.value = "";
+      reloadDropdownsOnMainSearch(-1);
     });
   }
 }

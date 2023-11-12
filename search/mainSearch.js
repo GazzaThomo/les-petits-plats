@@ -68,8 +68,11 @@ function hideCards(input) {
   const recipeCardsSection = document.querySelector(".recipe-cards-section");
   const cards = document.querySelectorAll(".card");
   const noCorrespondanceElement = document.querySelector(
-    ".no-correspondance-message"
+    ".no-correspondance-block"
   );
+  const visibleRecipesCount = recipesCopy.filter(
+    (recipe) => !recipe.isHidden
+  ).length;
 
   recipeCardsSection.classList.add("hide");
   setTimeout(() => {
@@ -87,16 +90,20 @@ function hideCards(input) {
         );
 
         // Check if the recipe was found and then check the isHidden property
-        if (correspondingRecipe) {
-          if (correspondingRecipe.isHidden) {
-            card.style.display = "none";
-          } else {
-            card.style.display = "block";
-          }
+        if (correspondingRecipe.isHidden) {
+          card.style.display = "none";
         } else {
-          noCorrespondanceElement.style.display = "block";
+          card.style.display = "block";
         }
       });
+
+      if (visibleRecipesCount === 0) {
+        console.log("inside if");
+        noCorrespondanceElement.style.display = "flex";
+      } else {
+        console.log("inside else");
+        noCorrespondanceElement.style.display = "";
+      }
     }
     recipeCardsSection.classList.remove("hide");
   }, 500);

@@ -10,11 +10,21 @@
   background: #ededed;
 }
 
+.no-correspondance-block {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.no-correspondance-block img {
+  /* transform: scale(0.25); */
+}
+
 .no-correspondance-message {
   text-align: center;
   font-family: Manrope;
   font-size: 48px;
-  display: none;
 }
 
 /******* NAVBAR AND SEARCH AREA ********/
