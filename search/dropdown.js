@@ -191,3 +191,7 @@ function hideListItemsInDropdowns(isIncluded, item) {
     item.style.display = "none";
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  initiateClickedDropdownElements();
+});
