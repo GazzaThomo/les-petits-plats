@@ -16,7 +16,6 @@ function initiateClickedDropdownElements() {
   const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
   const dropdownApplianceList = document.querySelectorAll(".list-appliance");
   const dropdownUtensilsList = document.querySelectorAll(".list-utensil");
-  console.log(dropdownIngredientList.length);
   for (let i = 0; i < dropdownIngredientList.length; i++) {
     dropdownIngredientList[i].addEventListener("click", function () {
       dropdownElementClicked(this);
@@ -40,7 +39,6 @@ function initiateClickedDropdownElements() {
       filterDropdownItems(this);
     });
   }
-  console.log("initiate");
 }
 
 function dropdownElementClicked(element) {

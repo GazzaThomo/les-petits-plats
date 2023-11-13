@@ -1,7 +1,7 @@
 import { recipesCopy } from "./script.js";
 import { searchRecipe } from "./search/mainSearch.js";
 
-function checkForMaliciousInput(inputArray) {
+export function checkForMaliciousInput(inputArray) {
   //this pattern checks for the basic sql commands
   const pattern =
     /('|;|--|\b(OR|SELECT|INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|EXEC|EXECUTE)\b)/i;
