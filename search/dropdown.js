@@ -164,21 +164,21 @@ export function reloadDropdownsOnMainSearch(input) {
 
   for (let i = 0; i < dropdownIngredientList.length; i++) {
     const item = dropdownIngredientList[i];
-    const value = item.textContent.toLowerCase();
+    const value = item.textContent;
     const isIncluded = newIngredientList.includes(value);
     hideListItemsInDropdowns(isIncluded, item);
   }
 
   for (let i = 0; i < dropdownApplianceList.length; i++) {
     const item = dropdownApplianceList[i];
-    const value = item.textContent.toLowerCase();
+    const value = item.textContent;
     const isIncluded = newApplianceList.includes(value);
     hideListItemsInDropdowns(isIncluded, item);
   }
 
   for (let i = 0; i < dropdownUtensilList.length; i++) {
     const item = dropdownUtensilList[i];
-    const value = item.textContent.toLowerCase();
+    const value = item.textContent;
     const isIncluded = newUtensilList.includes(value);
     hideListItemsInDropdowns(isIncluded, item);
   }
