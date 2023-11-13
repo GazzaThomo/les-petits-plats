@@ -1,4 +1,6 @@
 import { recipes } from "./recipes.js";
+import { reloadDropdownsOnMainSearch } from "./search/dropdown.js";
+import * as Helpers from "./helpers.js";
 
 export let globalIngredients, globalAppliances, globalUtensils;
 export let recipesCopy = [...recipes];
@@ -271,40 +273,6 @@ function addHiddenProperty() {
   });
 }
 
-export function updateRecipeCountText(input) {
-  const textElement = document.querySelector(".recipe-number");
-
-  if (input === -1) {
-    textElement.textContent = `${recipesCopy.length} recettes`;
-  } else {
-    let visibleRecipesCount = 0;
-    for (let i = 0; i < recipesCopy.length; i++) {
-      if (!recipesCopy[i].isHidden) visibleRecipesCount++;
-    }
-
-    const newText =
-      visibleRecipesCount === 1
-        ? `1 recette`
-        : `${visibleRecipesCount} recettes`;
-    textElement.textContent = newText;
-  }
-}
-
-export function checkForMaliciousInput(inputArray) {
-  //this pattern checks for the basic sql commands
-  const pattern =
-    /('|;|--|\b(OR|SELECT|INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|EXEC|EXECUTE)\b)/i;
-
-  for (const item of inputArray) {
-    if (typeof item === "string" && pattern.test(item)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-loadPageInitial();
-
 function iconEventListeners() {
   const crossMainSearchbar = document.getElementById("img-cross-searchbar");
   const allDropdownCross = document.querySelectorAll(".dropdown-cross img");
@@ -312,17 +280,18 @@ function iconEventListeners() {
   crossMainSearchbar.addEventListener("click", function () {
     const input = document.querySelector(".search-input-area");
     input.value = "";
+    Helpers.newSearch();
   });
 
   for (let i = 0; i < allDropdownCross.length; i++) {
-    allDropdownCross[i].addEventListener("click", function () {
-      //this is to stop the dropdown from closing when you click on the x
+    allDropdownCross[i].addEventListener("click", function (event) {
       event.stopPropagation();
-
-      //need to use this method, can't use closest because input is a sibling, not an ancestor
       const parentLi = allDropdownCross[i].closest("li");
       const inputInLi = parentLi.querySelector("input");
       inputInLi.value = "";
+      reloadDropdownsOnMainSearch(-1);
     });
   }
 }
+
+loadPageInitial();

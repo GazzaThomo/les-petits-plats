@@ -1,25 +1,21 @@
 import {
-  searchRecipe,
-  getMainSearchbarWords,
-  getAllBadgeText,
-} from "./mainSearch.js";
-
-import {
   globalIngredients,
   globalAppliances,
   globalUtensils,
-  checkForMaliciousInput,
+  getIngredients,
+  getAppareils,
+  getUstentiles,
 } from "../script.js";
 
-const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
-const dropdownApplianceList = document.querySelectorAll(".list-appliance");
-const dropdownUtensilsList = document.querySelectorAll(".list-utensil");
-
-const dropdownInputBoxElements = document.querySelectorAll(
-  ".dropdown-search-input"
-);
+import * as Helpers from "../helpers.js";
 
 function initiateClickedDropdownElements() {
+  const dropdownInputBoxElements = document.querySelectorAll(
+    ".dropdown-search-input"
+  );
+  const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
+  const dropdownApplianceList = document.querySelectorAll(".list-appliance");
+  const dropdownUtensilsList = document.querySelectorAll(".list-utensil");
   for (let i = 0; i < dropdownIngredientList.length; i++) {
     dropdownIngredientList[i].addEventListener("click", function () {
       dropdownElementClicked(this);
@@ -74,10 +70,6 @@ function addBadgeElement(word) {
   });
 }
 
-function removeElementFromDropdown(element) {
-  element.style.display = "none";
-}
-
 function clearDropdownInputField(element) {
   let closestSearchElement = element
     .closest(".dropdown")
@@ -102,66 +94,100 @@ function removeBadgeElement(element) {
 
 // this is basically to redo the searches on the cards
 function handleBadgeChange() {
-  const searchbarElement = document.querySelector(".main-search-bar");
-  const inputWords = getMainSearchbarWords(searchbarElement);
-  const badgeWords = getAllBadgeText();
-  const allSearchWords = [...inputWords, ...badgeWords];
-  const isMalicious = checkForMaliciousInput(allSearchWords);
-
-  if (isMalicious) {
-    console.log("Malicious input attempt !");
-    return;
-  } else {
-    searchRecipe(allSearchWords);
-  }
+  Helpers.newSearch();
 }
 
 //dropdown search
 export function filterDropdownItems(inputElement) {
-  let inputText;
-  let currentFilteredList;
-  inputText = inputElement.value.toLowerCase();
+  const isMalicious = Helpers.checkForMaliciousInput(inputElement.value);
+  if (isMalicious) {
+    console.log("Possible malicious entry detected!");
+    return;
+  } else {
+    let inputText;
+    let currentFilteredList;
+    inputText = inputElement.value.toLowerCase();
 
-  //find type of list (ingredient, appliance or utensil)
-  let dropdownType = inputElement
-    .closest(".dropdown")
-    .getAttribute("data-type");
+    //find type of list (ingredient, appliance or utensil)
+    let dropdownType = inputElement
+      .closest(".dropdown")
+      .getAttribute("data-type");
 
-  //set filtered list to be the one corresponding to the dropdown
-  switch (dropdownType) {
-    case "drop-ingredients":
-      currentFilteredList = globalIngredients;
-      break;
-    case "drop-appareils":
-      currentFilteredList = globalAppliances;
-      break;
-    case "drop-ustensiles":
-      currentFilteredList = globalUtensils;
-      break;
-    default:
-      currentFilteredList = [];
+    //set filtered list to be the one corresponding to the dropdown
+    switch (dropdownType) {
+      case "drop-ingredients":
+        currentFilteredList = globalIngredients;
+        break;
+      case "drop-appareils":
+        currentFilteredList = globalAppliances;
+        break;
+      case "drop-ustensiles":
+        currentFilteredList = globalUtensils;
+        break;
+      default:
+        currentFilteredList = [];
+    }
+
+    //find all dropdown items within the same dropdown as the input element
+    let dropdownItems = inputElement
+      .closest(".dropdown")
+      .querySelectorAll(".dropdown-item");
+
+    for (let i = 0; i < dropdownItems.length; i++) {
+      let item = dropdownItems[i];
+      //if a word is in the input box, check that each item (from dropdown list) contains the word, plus that the item is in the filtered list (global list)
+      if (
+        inputText &&
+        item.textContent.toLowerCase().includes(inputText) &&
+        currentFilteredList.includes(item.textContent)
+      ) {
+        item.style.display = "";
+      }
+      // this is for no word. Just check that the item is in the filtered list
+      else if (!inputText && currentFilteredList.includes(item.textContent)) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    }
+  }
+}
+
+export function reloadDropdownsOnMainSearch(input) {
+  const dropdownIngredientList = document.querySelectorAll(".list-ingredient");
+  const dropdownApplianceList = document.querySelectorAll(".list-appliance");
+  const dropdownUtensilList = document.querySelectorAll(".list-utensil");
+
+  const newIngredientList = getIngredients(input);
+  const newApplianceList = getAppareils(input);
+  const newUtensilList = getUstensiles(input);
+
+  for (let i = 0; i < dropdownIngredientList.length; i++) {
+    const item = dropdownIngredientList[i];
+    const value = item.textContent.toLowerCase();
+    const isIncluded = newIngredientList.includes(value);
+    hideListItemsInDropdowns(isIncluded, item);
   }
 
-  //find all dropdown items within the same dropdown as the input element
-  let dropdownItems = inputElement
-    .closest(".dropdown")
-    .querySelectorAll(".dropdown-item");
+  for (let i = 0; i < dropdownApplianceList.length; i++) {
+    const item = dropdownApplianceList[i];
+    const value = item.textContent.toLowerCase();
+    const isIncluded = newApplianceList.includes(value);
+    hideListItemsInDropdowns(isIncluded, item);
+  }
 
-  for (let i = 0; i < dropdownItems.length; i++) {
-    let item = dropdownItems[i];
-    //if a word is in the input box, check that each item (from dropdown list) contains the word, plus that the item is in the filtered list (global list)
-    if (
-      inputText &&
-      item.textContent.toLowerCase().includes(inputText) &&
-      currentFilteredList.includes(item.textContent)
-    ) {
-      item.style.display = "";
-    }
-    // this is for no word. Just check that the item is in the filtered list
-    else if (!inputText && currentFilteredList.includes(item.textContent)) {
-      item.style.display = "";
-    } else {
-      item.style.display = "none";
-    }
+  for (let i = 0; i < dropdownUtensilList.length; i++) {
+    const item = dropdownUtensilList[i];
+    const value = item.textContent.toLowerCase();
+    const isIncluded = newUtensilList.includes(value);
+    hideListItemsInDropdowns(isIncluded, item);
+  }
+}
+
+function hideListItemsInDropdowns(isIncluded, item) {
+  if (isIncluded) {
+    item.style.display = "";
+  } else {
+    item.style.display = "none";
   }
 }

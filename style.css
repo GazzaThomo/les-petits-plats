@@ -10,11 +10,26 @@
   background: #ededed;
 }
 
+.no-correspondance-block.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  visibility: visible;
+  opacity: 1;
+  max-height: fit-content;
+}
+
+.no-correspondance-block {
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  max-height: 0;
+}
+
 .no-correspondance-message {
   text-align: center;
   font-family: Manrope;
   font-size: 48px;
-  display: none;
 }
 
 /******* NAVBAR AND SEARCH AREA ********/

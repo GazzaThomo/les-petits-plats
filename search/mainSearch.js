@@ -1,20 +1,19 @@
-import { reloadDropdownsOnMainSearch } from "./searchbar.js";
-import { recipesCopy, updateRecipeCountText } from "../script.js";
+import { reloadDropdownsOnMainSearch } from "./dropdown.js";
+import { recipesCopy } from "../script.js";
+import * as Helpers from "../helpers.js";
 
 //main search function
 export function searchRecipe(arrayOfStrings) {
-  console.log(arrayOfStrings);
-  // arrayOfStrings.some((word) => word.length >= 3)
   if (arrayOfStrings.length > 0) {
     changeIsHiddenProperty(arrayOfStrings);
     hideCards();
     reloadDropdownsOnMainSearch(arrayOfStrings);
-    updateRecipeCountText();
+    Helpers.updateRecipeCountText();
   } else {
     changeIsHiddenProperty([]);
     hideCards(-1);
     reloadDropdownsOnMainSearch(-1);
-    updateRecipeCountText(-1);
+    Helpers.updateRecipeCountText(-1);
   }
 }
 
@@ -72,6 +71,13 @@ function hideCards(input) {
     ".no-correspondance-message"
   );
 
+  let visibleRecipesCount = 0;
+  for (let i = 0; i < recipesCopy.length; i++) {
+    if (!recipesCopy[i].isHidden) {
+      visibleRecipesCount++;
+    }
+  }
+
   recipeCardsSection.classList.add("hide");
   setTimeout(() => {
     if (input === -1) {
@@ -88,43 +94,18 @@ function hideCards(input) {
           (recipe) => recipe.id === dataId
         );
 
-        // Check if the recipe was found and then check the isHidden property
-        if (correspondingRecipe) {
-          if (correspondingRecipe.isHidden) {
-            card.style.display = "none";
-          } else {
-            card.style.display = "block";
-          }
+        if (correspondingRecipe.isHidden) {
+          card.style.display = "none";
         } else {
-          noCorrespondanceElement.style.display = "block";
+          card.style.display = "block";
         }
+      }
+      if (visibleRecipesCount === 0) {
+        noCorrespondanceElement.classList.add("show");
+      } else {
+        noCorrespondanceElement.classList.remove("show");
       }
     }
     recipeCardsSection.classList.remove("hide");
   }, 500);
-}
-
-// helper functions for the other js files
-export function getMainSearchbarWords(inputElement) {
-  const input = inputElement.value.toLowerCase();
-  const words = input.trim().split(" ");
-  const inputWords = [];
-
-  for (let i = 0; i < words.length; i++) {
-    if (words[i].length > 0) {
-      inputWords.push(words[i]);
-    }
-  }
-
-  return inputWords;
-}
-
-export function getAllBadgeText() {
-  const badges = document.querySelectorAll(".badge-text");
-  let badgeText = [];
-  for (let i = 0; i < badges.length; i++) {
-    badgeText.push(badges[i].textContent);
-  }
-
-  return badgeText;
 }
