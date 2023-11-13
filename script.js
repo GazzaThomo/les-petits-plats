@@ -89,7 +89,7 @@ function loadRecipeCards() {
     card.appendChild(cardBody);
 
     cardsContainer.appendChild(card);
-    updateRecipeCountText(recipesCopy);
+    Helpers.updateRecipeCountText(recipesCopy);
   }
 }
 

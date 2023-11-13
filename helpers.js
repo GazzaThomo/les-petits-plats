@@ -50,6 +50,7 @@ function getMainSearchbarWords(inputElement) {
       continue;
     }
   }
+  return filteredInputWords;
 }
 
 function getAllBadgeText() {

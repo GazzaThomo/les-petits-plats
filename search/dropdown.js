@@ -4,7 +4,7 @@ import {
   globalUtensils,
   getIngredients,
   getAppareils,
-  getUstentiles,
+  getUstensiles,
 } from "../script.js";
 
 import * as Helpers from "../helpers.js";
