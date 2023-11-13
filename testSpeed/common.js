@@ -1826,7 +1826,6 @@ const recipes = [
   },
 ];
 
-const testArray = ["Chocolat", "fraise"];
 let recipesCopy = [...recipes];
 
 function newSearch() {
@@ -1939,3 +1938,4 @@ function init() {
 }
 
 init();
+const testArray = ["Chocolat", "fraise"];
