@@ -4,7 +4,7 @@ import { searchRecipe } from "./search/mainSearch.js";
 export function checkForMaliciousInput(inputArray) {
   //this pattern checks for the basic sql commands
   const pattern =
-    /('|;|--|\b(OR|SELECT|INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|EXEC|EXECUTE)\b)/i;
+    /(;|--|\b(OR|SELECT|INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|EXEC|EXECUTE)\b)/i;
 
   for (const item of inputArray) {
     if (typeof item === "string" && pattern.test(item)) {
