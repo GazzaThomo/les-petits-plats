@@ -100,16 +100,16 @@ export function getIngredients(input = []) {
 
   for (let i = 0; i < recipes.length; i++) {
     if (!recipes[i].isHidden) {
-      let object = {};
+      // let object = {};
       let ingredients = recipes[i].ingredients;
-      let specificRecipeIngredients = [];
-      object.id = recipes[i].id;
+      // let specificRecipeIngredients = [];
+      // object.id = recipes[i].id;
       for (let j = 0; j < ingredients.length; j++) {
         let someIngredient = ingredients[j].ingredient.trim().toLowerCase();
         allIngredients.push(someIngredient);
-        specificRecipeIngredients.push(someIngredient);
+        // specificRecipeIngredients.push(someIngredient);
       }
-      object.ingredients = specificRecipeIngredients;
+      // object.ingredients = specificRecipeIngredients;
     }
   }
 
