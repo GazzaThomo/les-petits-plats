@@ -99,22 +99,22 @@ export function getIngredients(input = []) {
 
   recipesCopy.forEach((recipe) => {
     if (!recipe.isHidden) {
-      let object = {};
+      // let object = {};
       let ingredients = recipe.ingredients;
-      let specificRecipeIngredients = [];
-      object.id = recipe.id;
+      // let specificRecipeIngredients = [];
+      // object.id = recipe.id;
       ingredients.forEach((ingredient) => {
         let someIngredient = ingredient.ingredient.trim();
         allIngredients.push(someIngredient.toLowerCase());
-        specificRecipeIngredients.push(someIngredient.toLowerCase());
+        // specificRecipeIngredients.push(someIngredient.toLowerCase());
       });
-      object.ingredients = specificRecipeIngredients;
+      // object.ingredients = specificRecipeIngredients;
     }
   });
 
   allIngredients = allIngredients.sort();
 
-  //this creates a unique set of all ingredients
+  //this creates a unique set of all ingredients, then spreads it into an array
   let setIngredients = [...new Set(allIngredients)];
 
   if (input.length > 0) {
@@ -173,6 +173,7 @@ export function getUstentiles(input = []) {
   let filteredUtensils;
   recipes.forEach((recipe) => {
     if (!recipe.isHidden) {
+      //spread aarray, otherwise you get array of arrays
       allUstentiles.push(...recipe.ustensils);
     }
   });
