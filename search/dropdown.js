@@ -143,7 +143,7 @@ export function filterDropdownItems(inputElement) {
       ) {
         item.style.display = "";
       }
-      // this is for no word. Just check that the item is in the filtered list
+      // this is for no word. (ex: reset text field using the cross)
       else if (!inputText && currentFilteredList.includes(item.textContent)) {
         item.style.display = "";
       } else {
