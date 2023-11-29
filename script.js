@@ -98,18 +98,14 @@ export function getIngredients(input = []) {
   let filteredIngredients;
   if (input === -1) input = [];
 
+  //here we are looking at all the recipes, and chechking if they are hidden or not. If there aren't hidden, we add the ingredients to an array
   for (let i = 0; i < recipes.length; i++) {
     if (!recipes[i].isHidden) {
-      // let object = {};
       let ingredients = recipes[i].ingredients;
-      // let specificRecipeIngredients = [];
-      // object.id = recipes[i].id;
       for (let j = 0; j < ingredients.length; j++) {
         let someIngredient = ingredients[j].ingredient.trim().toLowerCase();
         allIngredients.push(someIngredient);
-        // specificRecipeIngredients.push(someIngredient);
       }
-      // object.ingredients = specificRecipeIngredients;
     }
   }
 
@@ -285,6 +281,7 @@ function iconEventListeners() {
 
   for (let i = 0; i < allDropdownCross.length; i++) {
     allDropdownCross[i].addEventListener("click", function (event) {
+      //stop propagation neccessary to stop menus from closing when we wlick on the cross
       event.stopPropagation();
       const parentLi = allDropdownCross[i].closest("li");
       const inputInLi = parentLi.querySelector("input");
